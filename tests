@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php
+/**
+ *
+ * CLI tool to quickly test/debug specific API methods.
+ *
+ */
+
+// composer auto loader
+require __DIR__ . '/vendor/autoload.php';
+
+use \PHPUnit\Framework\Assert;
+
+define('BENCHMARK_ENABLED', true);
+define('LOGGER_ENABLED', true);
+define('LOGGER_ENABLE_PRINT_TIME', true);
+
+function test($test)
+{
+    $line = debug_backtrace()[0]['line'];
+    
+    if (!$test) {
+        throw new \Exception("Test on line {$line} FAILED !!!!");
+    } else {
+        echo "Test on line {$line} PASSED\n";
+    }
+}
+
+// parse characters
+// view Lodestone/Modules/Http/Routes for more urls.
+$option = isset($argv[1]) ? trim($argv[1]) : false;
+$arg1   = isset($argv[2]) ? trim($argv[2]) : false;
+
+// create api instance
+$api = new \Lodestone\Api();
+
+echo "-- RUNNING TESTS --\n";
+Assert::assertSame($api->getCharacter('730968')->Name, 'Premium Virtue');
+Assert::assertNotEmpty($api->getCharacterFriends('730968'));
+Assert::assertNotEmpty($api->getCharacterFollowing('15609878'));
+Assert::assertTrue($api->getCharacterAchievements('730968')->PointsTotal > 0);
+Assert::assertSame($api->getFreeCompany('9231253336202687179')->Name, 'Equilibrium');
+Assert::assertNotEmpty($api->getFreeCompanyMembers('9231253336202687179'));
+Assert::assertSame($api->getLinkshellMembers('19984723346535274')->Name, '! Monster Hunt !');
+Assert::assertNotEmpty($api->getPvPTeamMembers('427095eed4c06a9854df9504ba5100f424abd984'));
+Assert::assertNotEmpty($api->searchCharacter('Premium Virtue'));
+Assert::assertNotEmpty($api->searchFreeCompany('pro'));
+Assert::assertNotEmpty($api->searchLinkshell('pro'));
+Assert::assertNotEmpty($api->searchPvPTeam('pro'));
+Assert::assertNotEmpty($api->getLodestoneBanners());
+Assert::assertNotEmpty($api->getLodestoneNews());
+Assert::assertNotEmpty($api->getLodestoneTopics());
+Assert::assertNotEmpty($api->getLodestoneNotices());
+Assert::assertNotEmpty($api->getLodestoneMaintenance());
+Assert::assertNotEmpty($api->getLodestoneUpdates());
+Assert::assertNotEmpty($api->getLodestoneStatus());
+Assert::assertNotEmpty($api->getWorldStatus());
+Assert::assertNotEmpty($api->getDevBlog());
+# Assert::assertNotEmpty($api->getDevPosts()); - this takes agessssss
+Assert::assertNotEmpty($api->getFeast());
+Assert::assertNotEmpty($api->getDeepDungeon());
+
+echo "-- TESTS COMPLETE --\n";

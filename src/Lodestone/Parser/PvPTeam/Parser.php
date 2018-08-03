@@ -57,7 +57,8 @@ class Parser extends ParserHelper
                 }
             }
 
-            $obj->Feasts = end($node->find('.entry__freecompany__info')->find('span'))->plaintext;
+            $tmp = $node->find('.entry__freecompany__info');
+            $obj->Feasts = end($tmp)->find('span')->plaintext;
             $this->pvpTeam->Characters[] = $obj;
         }
     }
