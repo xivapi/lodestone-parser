@@ -9,9 +9,7 @@
 // composer auto loader
 require __DIR__ . '/vendor/autoload.php';
 
-define('BENCHMARK_ENABLED', true);
 define('LOGGER_ENABLED', true);
-define('LOGGER_ENABLE_PRINT_TIME', true);
 
 // parse characters
 // view Lodestone/Modules/Http/Routes for more urls.
@@ -38,5 +36,5 @@ if (!$option || !in_array($option, get_class_methods($api))) {
 // ls = 19984723346535274
 
 $data = $arg1 ? $api->{$option}($arg1) : $api->{$option}();
-print_r($data ? (method_exists($data, 'toArray') ? $data->toArray(1) : $data) : "\nNo data, was the command correct? > ". $option);
+print_r($data ? (method_exists($data, 'toArray') ? $data->toArray() : $data) : "\nNo data, was the command correct? > ". $option);
 print_r("\n");

@@ -6,6 +6,10 @@ class Logger
 {
     public static function write($message)
     {
+        if (!defined('LOGGER_ENABLED')) {
+            return;
+        }
+        
         $time  = date('Y-m-d H:i:s');
         $ms    = round(microtime(true) * 1000);
         $mem   = memory_get_usage(true);
