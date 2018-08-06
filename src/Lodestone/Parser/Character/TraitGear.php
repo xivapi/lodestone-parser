@@ -107,7 +107,7 @@ trait TraitGear
                        $materiaObject = new ItemSimple();
                        $materiaObject->Name  = trim(strip_tags($mdetails[0]));
                        $materiaObject->Value = trim(strip_tags($mdetails[1]));
-                       $item->Materia = $materiaObject;
+                       $item->Materia[] = $materiaObject;
                    }
                }
             }
