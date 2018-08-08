@@ -3,9 +3,7 @@
 namespace Lodestone\Parser\Achievements;
 
 use Lodestone\{
-    Entity\Character\Achievements,
-    Entity\Character\Achievement,
-    Parser\Html\ParserHelper
+    Entity\Character\Achievements, Entity\Character\Achievement, Exceptions\AchievementsPrivateException, Parser\Html\ParserHelper
 };
 
 class Parser extends ParserHelper
@@ -31,6 +29,10 @@ class Parser extends ParserHelper
     {
         $box = $this->getSpecial__Achievements();
         $rows = $box->find('li');
+
+        if (!$rows) {
+            throw new AchievementsPrivateException();
+        }
         
         foreach($rows as $node) {
             $obj = new Achievement();
