@@ -54,7 +54,8 @@ trait TraitGear
             }
 
             // save slot
-            $item->Slot = str_ireplace(' ', '', $slot);
+            $slot = str_ireplace(' ', '', $slot);
+            $item->Slot = $slot;
 
             // add mirage
             $mirage = $this->getArrayFromRange('db-tooltip__item__mirage', 8, $html);
