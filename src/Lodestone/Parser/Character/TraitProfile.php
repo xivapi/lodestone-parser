@@ -119,7 +119,7 @@ trait TraitProfile
 
     protected function parseProfileFreeCompany($node)
     {
-        $this->profile->FreeCompanyId = trim(explode('/', $node->find("a", 0)->getAttribute("href"))[3]);
+        $this->profile->FreeCompanyId = 'fc'. trim(explode('/', $node->find("a", 0)->getAttribute("href"))[3]);
     }
 
     protected function parseProfilePvPTeam($node)
