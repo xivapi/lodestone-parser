@@ -11,11 +11,9 @@ class Parser extends ParserHelper
     /** @var Achievements */
     protected $achievements;
 
-    function __construct($id, int $category)
+    function __construct()
     {
         $this->achievements = new Achievements();
-        $this->achievements->Category = $category;
-        $this->achievements->ID = $id;
     }
 
     public function parse(bool $includeUnObtained = true): Achievements
@@ -55,7 +53,7 @@ class Parser extends ParserHelper
             $timestamp = $timestamp->plaintext;
             $timestamp = trim(explode('(', $timestamp)[2]);
             $timestamp = trim(explode(',', $timestamp)[0]);
-            $timestamp = $timestamp ? new \DateTime('@' . $timestamp) : null;
+            $timestamp = $timestamp ? (new \DateTime('@' . $timestamp))->format('U') : null;
 
             if ($timestamp) {
                 $this->achievements->PointsObtained += $obj->Points;
