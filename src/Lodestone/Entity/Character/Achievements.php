@@ -6,8 +6,7 @@ use Lodestone\Entity\AbstractEntity;
 
 class Achievements extends AbstractEntity
 {
-    public $ID;
-    public $Category;
+    public $KindID;
     public $PointsObtained = 0;
     public $PointsTotal = 0;
     public $Achievements = [];

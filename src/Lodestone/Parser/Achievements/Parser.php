@@ -11,19 +11,20 @@ class Parser extends ParserHelper
     /** @var Achievements */
     protected $achievements;
 
-    function __construct()
+    function __construct($kindId)
     {
         $this->achievements = new Achievements();
+        $this->achievements->KindID = $kindId;
     }
 
-    public function parse(bool $includeUnObtained = true): Achievements
+    public function parse(bool $nonObtained = true): Achievements
     {
         $this->initialize();
-        $this->parseAchievements($includeUnObtained);
+        $this->parseAchievements($nonObtained);
         return $this->achievements;
     }
 
-    private function parseAchievements(bool $includeUnObtained): void
+    private function parseAchievements(bool $nonObtained): void
     {
         $box = $this->getSpecial__Achievements();
         $rows = $box->find('li');
@@ -35,7 +36,7 @@ class Parser extends ParserHelper
         foreach($rows as $node) {
             $obj = new Achievement();
 
-            if (!empty($achnode = $node->find(($includeUnObtained ? '.entry__achievement' : '.entry__achievement--complete'), 0))) {
+            if (!empty($achnode = $node->find(($nonObtained ? '.entry__achievement' : '.entry__achievement--complete'), 0))) {
                 $obj->ID     = explode('/', $achnode->getAttribute('href'))[6];
                 $obj->Name   = $node->find('.entry__activity__txt', 0)->plaintext;
                 $obj->Icon   = explode('?', $node->find('.entry__achievement__frame', 0)->find('img', 0)->getAttribute("src"))[0];
