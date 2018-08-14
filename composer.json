@@ -3,7 +3,7 @@
     "type": "library",
     "keywords": ["ffxiv","php","parser","lodestone"],
     "description": "A Lodestone Parser",
-    "homepage": "https://github.com/viion/lodestone-php",
+    "homepage": "https://github.com/xivapi/lodestone-parser",
     "license": "MIT",
     "authors": [
         {
