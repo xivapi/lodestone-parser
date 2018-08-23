@@ -92,7 +92,7 @@ class Parser extends ParserHelper
         if ($seekNodes = $box->find('.freecompany__focus_icon--role', 0)) {
             foreach ($seekNodes->find('li') as $node) {
                 $this->fc->Seeking[] = [
-                    'Status' => ($node->getAttribute('class') == 'freecompany__focus_icon--off'),
+                    'Status' => ($node->getAttribute('class') != 'freecompany__focus_icon--off'),
                     'Icon'   => trim($node->find('img', 0)->src),
                     'Name'   => trim($node->find('p', 0)->plaintext)
                 ];
@@ -102,7 +102,7 @@ class Parser extends ParserHelper
         if ($focusNodes = $box->find('.freecompany__focus_icon:not(.freecompany__focus_icon--role)', 0)) {
             foreach ($focusNodes->find('li') as $node) {
                 $this->fc->Focus[] = [
-                    'Status' => ($node->getAttribute('class') == 'freecompany__focus_icon--off'),
+                    'Status' => ($node->getAttribute('class') != 'freecompany__focus_icon--off'),
                     'Icon'   => trim($node->find('img', 0)->src),
                     'Name'   => trim($node->find('p', 0)->plaintext),
                 ];
