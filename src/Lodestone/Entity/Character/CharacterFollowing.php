@@ -14,4 +14,10 @@ class CharacterFollowing extends AbstractEntity
     use CharacterListTrait;
     
     public $ID;
+
+    public $ParseDate;
+    public function __construct()
+    {
+        $this->ParseDate = time();
+    }
 }

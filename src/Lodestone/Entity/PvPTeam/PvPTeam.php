@@ -17,4 +17,10 @@ class PvPTeam extends AbstractEntity
     public $Crest = [];
     public $Name;
     public $Server;
+
+    public $ParseDate;
+    public function __construct()
+    {
+        $this->ParseDate = time();
+    }
 }

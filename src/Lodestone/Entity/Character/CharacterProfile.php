@@ -29,6 +29,12 @@ class CharacterProfile extends AbstractEntity
     public $Minions = [];
     public $Mounts = [];
 
+    public $ParseDate;
+    public function __construct()
+    {
+        $this->ParseDate = time();
+    }
+
     public function getHash()
     {
         $data = $this->toArray();
