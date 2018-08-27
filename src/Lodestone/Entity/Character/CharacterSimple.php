@@ -12,5 +12,5 @@ class CharacterSimple extends AbstractEntity
     public $Avatar;
     public $Rank;
     public $RankIcon;
-    public $Feasts = 0;
+    public $FeastMatches = 0;
 }
