@@ -6,7 +6,7 @@ use Lodestone\Entity\AbstractEntity;
 
 class LinkshellSimple extends AbstractEntity
 {
-    public $id;
-    public $name;
-    public $server;
+    public $ID;
+    public $Name;
+    public $Server;
 }
