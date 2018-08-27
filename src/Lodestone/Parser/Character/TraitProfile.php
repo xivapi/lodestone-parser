@@ -124,6 +124,6 @@ trait TraitProfile
 
     protected function parseProfilePvPTeam($node)
     {
-        $this->profile->PvPTeam = trim(explode('/', $node->find("a", 0)->getAttribute("href"))[3]);
+        $this->profile->PvPTeamId = trim(explode('/', $node->find("a", 0)->getAttribute("href"))[3]);
     }
 }
