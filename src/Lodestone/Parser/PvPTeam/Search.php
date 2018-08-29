@@ -62,7 +62,7 @@ class Search extends ParserHelper
             $obj->Name   = trim($node->find('.entry__name')->plaintext);
             $obj->Server = trim($node->find('.entry__world')->plaintext);
             
-            $this->results->PvPTeams = $obj;
+            $this->results->PvPTeams[] = $obj;
         }
     }
 }
