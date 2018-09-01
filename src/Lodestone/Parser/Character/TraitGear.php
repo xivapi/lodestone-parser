@@ -69,6 +69,8 @@ trait TraitGear
                 $mirageItem = new ItemSimple();
                 $mirageItem->ID   = $mirageId;
                 $mirageItem->Name = $mirageName;
+                
+                $item->Mirage = $mirageItem;
             }
 
 
