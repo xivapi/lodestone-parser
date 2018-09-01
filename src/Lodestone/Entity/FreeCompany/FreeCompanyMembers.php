@@ -2,11 +2,7 @@
 
 namespace Lodestone\Entity\FreeCompany;
 
-use Lodestone\{
-    Entity\AbstractEntity,
-    Entity\Traits\CharacterListTrait,
-    Entity\Traits\ListTrait
-};
+use Lodestone\Entity\AbstractEntity
 
 class FreeCompanyMembers extends AbstractEntity
 {

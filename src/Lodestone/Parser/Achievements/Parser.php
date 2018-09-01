@@ -36,8 +36,8 @@ class Parser extends ParserHelper
         foreach($rows as $node) {
             $obj = new Achievement();
 
-            if (!empty($achnode = $node->find(($nonObtained ? '.entry__achievement' : '.entry__achievement--complete'), 0))) {
-                $obj->ID     = explode('/', $achnode->getAttribute('href'))[6];
+            if (!empty($node = $node->find(($nonObtained ? '.entry__achievement' : '.entry__achievement--complete'), 0))) {
+                $obj->ID     = explode('/', $node->getAttribute('href'))[6];
                 $obj->Name   = $node->find('.entry__activity__txt', 0)->plaintext;
                 $obj->Icon   = explode('?', $node->find('.entry__achievement__frame', 0)->find('img', 0)->getAttribute("src"))[0];
                 $obj->Points = intval($node->find('.entry__achievement__number', 0)->plaintext);

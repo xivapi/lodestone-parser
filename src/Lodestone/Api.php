@@ -4,21 +4,13 @@ namespace Lodestone;
 
 use Lodestone\{
     Entity\Character\Achievements,
-    Entity\Character\CharacterFollowing,
-    Entity\Character\CharacterFriends,
     Entity\Character\CharacterProfile,
     Entity\FreeCompany\FreeCompany,
     Entity\FreeCompany\FreeCompanyMembers,
     Entity\Linkshell\Linkshell,
+    Entity\ListView\ListView,
     Entity\PvPTeam\PvPTeam,
     Http\Routes
-};
-
-use Lodestone\Entity\Search\{
-    SearchCharacter,
-    SearchFreeCompany,
-    SearchLinkshell,
-    SearchPvPTeam
 };
 
 use Lodestone\Parser\{
@@ -49,7 +41,7 @@ class Api
      * @param bool $server
      * @param bool $page
      */
-    public function searchCharacter($name, $server = false, $page = 1): SearchCharacter
+    public function searchCharacter($name, $server = false, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -65,7 +57,7 @@ class Api
      * @param bool $server
      * @param bool $page
      */
-    public function searchFreeCompany($name, $server = false, $page = 1): SearchFreeCompany
+    public function searchFreeCompany($name, $server = false, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -81,7 +73,7 @@ class Api
      * @param $server
      * @param $page
      */
-    public function searchLinkshell($name, $server = false, $page = 1): SearchLinkshell
+    public function searchLinkshell($name, $server = false, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -97,7 +89,7 @@ class Api
      * @param $server
      * @param $page
      */
-    public function searchPvPTeam($name, $server = false, $page = 1): SearchPvPTeam
+    public function searchPvPTeam($name, $server = false, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -121,26 +113,26 @@ class Api
      * @param $id
      * @param $page
      */
-    public function getCharacterFriends($id, $page = 1): CharacterFriends
+    public function getCharacterFriends($id, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
 
         $url = sprintf(Routes::LODESTONE_CHARACTERS_FRIENDS_URL, $id);
-        return (new CharacterFriendsParser($id))->url($url . $urlBuilder->get())->parse();
+        return (new CharacterFriendsParser())->url($url . $urlBuilder->get())->parse();
     }
 
     /**
      * @param $id
      * @param $page
      */
-    public function getCharacterFollowing($id, $page = 1): CharacterFollowing
+    public function getCharacterFollowing($id, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
 
         $url = sprintf(Routes::LODESTONE_CHARACTERS_FOLLOWING_URL, $id);
-        return (new CharacterFollowingParser($id))->url($url . $urlBuilder->get())->parse();
+        return (new CharacterFollowingParser())->url($url . $urlBuilder->get())->parse();
     }
 
     /**
@@ -168,37 +160,37 @@ class Api
      * @param $id
      * @param bool $page
      */
-    public function getFreeCompanyMembers($id, $page = 1): FreeCompanyMembers
+    public function getFreeCompanyMembers($id, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
 
         $url = sprintf(Routes::LODESTONE_FREECOMPANY_MEMBERS_URL, $id);
-        return (new FreeCompanyMembersParser($id))->url($url . $urlBuilder->get())->parse();
+        return (new FreeCompanyMembersParser())->url($url . $urlBuilder->get())->parse();
     }
 
     /**
      * @param $id
      * @param bool $page
      */
-    public function getLinkshellMembers($id, $page = 1): Linkshell
+    public function getLinkshellMembers($id, $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
 
         $url = sprintf(Routes::LODESTONE_LINKSHELL_MEMBERS_URL, $id) . $urlBuilder->get();
-        return (new LinkshellParser($id))->url($url)->parse();
+        return (new LinkshellParser())->url($url)->parse();
     }
     
     /**
      * @param $id
      */
-    public function getPvPTeamMembers($id): PvPTeam
+    public function getPvPTeamMembers($id): ListView
     {
         $urlBuilder = new UrlBuilder();
 
         $url = sprintf(Routes::LODESTONE_PVPTEAM_MEMBERS_URL, $id) . $urlBuilder->get();
-        return (new PvPTeamParser($id))->url($url)->parse();
+        return (new PvPTeamParser())->url($url)->parse();
     }
 
     /**
