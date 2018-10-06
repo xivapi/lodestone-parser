@@ -24,6 +24,7 @@ class HttpRequest
 
     public function get($url)
     {
+        $start = microtime(true);
         $url = str_ireplace(' ', '+', $url);
         Logger::write('GET: '. $url);
 
@@ -41,7 +42,8 @@ class HttpRequest
         curl_close($handle);
         unset($handle);
 
-        Logger::write('RESPONSE: '. $httpCode);
+        $duration = microtime(true) - $start;
+        Logger::write("RESPONSE: {$httpCode} - {$duration} seconds");
         
         if ($httpCode == 503) {
             throw new MaintenanceException();
