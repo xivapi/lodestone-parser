@@ -85,6 +85,19 @@ class ParserHelper
             throw new GenericException("Html was empty");
         }
     }
+    
+    protected function validatePage()
+    {
+        $dom = $this->getDocument();
+
+        //
+        // If the class job icon is empty, then the page is likely all messed up
+        //
+        $src = $dom->find('.character__classjob', 0)->getAttribute('src');
+        if (empty(trim($src))) {
+            throw new GenericException("Html was empty");
+        }
+    }
 
     /**
      * Set html document

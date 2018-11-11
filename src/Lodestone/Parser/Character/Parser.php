@@ -28,6 +28,7 @@ class Parser extends ParserHelper
     public function parse(): CharacterProfile
     {
         $this->initialize();
+        $this->validatePage();
 
         // parse stuff (order is important)
         $this->parseProfile();
