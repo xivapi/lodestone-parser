@@ -13,7 +13,7 @@ trait TraitAttributes
         // fetches:
         // * attributes
         // * offensive, defensive, physical and mental properties
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             foreach($box->find('.character__param__list', $i)->find('tr') as $node) {
                 $this->profile->Attributes[] = $this->parseAttributeCommon($node);
             }
