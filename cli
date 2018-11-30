@@ -13,14 +13,16 @@ define('LOGGER_ENABLED', true);
 
 // parse characters
 // view Lodestone/Modules/Http/Routes for more urls.
-$option = isset($argv[1]) ? trim($argv[1]) : false;
-$arg1   = isset($argv[2]) ? trim($argv[2]) : false;
+$func = isset($argv[1]) ? trim($argv[1]) : false;
+$arg1 = isset($argv[2]) ? trim($argv[2]) : false;
+$arg2 = isset($argv[3]) ? trim($argv[3]) : false;
+$arg3 = isset($argv[4]) ? trim($argv[4]) : false;
 
 // create api instance
 $api = new \Lodestone\Api();
 
-if (!$option || !in_array($option, get_class_methods($api))) {
-    echo "\nPlease provide a valid option argument: php bin/console <option> <param...>\n";
+if (!$func || !in_array($func, get_class_methods($api))) {
+    echo "\nPlease provide a valid func argument: php bin/console <func> <param...>\n";
     
     foreach (get_class_methods($api) as $method) {
         echo "- {$method}\n";
@@ -35,6 +37,6 @@ if (!$option || !in_array($option, get_class_methods($api))) {
 // fc = 9231253336202687179
 // ls = 19984723346535274
 
-$data = $arg1 ? $api->{$option}($arg1) : $api->{$option}();
-print_r($data ? (method_exists($data, 'toArray') ? $data->toArray() : $data) : "\nNo data, was the command correct? > ". $option);
+$data = call_user_func_array([$api, $func], [$arg1, $arg2, $arg3]);
+print_r($data ? (method_exists($data, 'toArray') ? $data->toArray() : $data) : "\nNo data, was the command correct? > ". $func);
 print_r("\n");

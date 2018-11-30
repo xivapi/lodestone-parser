@@ -26,8 +26,9 @@ class Pagination extends AbstractEntity
         $this->PagePrevious = ($this->Page > 1) ? $this->Page - 1 : 1;
         
         // set results counts
-        $this->Results = $this->ResultsPerPage;
-        if ($this->ResultsTotal < $this->ResultsPerPage) {
+        if ($this->Page == $this->PageTotal) {
+            $this->Results = $this->ResultsTotal % $this->ResultsPerPage;
+        } else {
             $this->Results = $this->ResultsPerPage;
         }
         
