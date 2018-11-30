@@ -2,19 +2,27 @@
 
 namespace Lodestone\Parser\Character;
 
+use Lodestone\Dom\NodeList;
 use Lodestone\Entity\Character\Attribute;
 
 trait TraitAttributes
 {
     protected function parseAttributes(): void
     {
+        /** @var NodeList $box */
         $box = $this->getSpecial__AttributesPart1();
 
         // fetches:
         // * attributes
         // * offensive, defensive, physical and mental properties
         for ($i = 0; $i < 6; $i++) {
-            foreach($box->find('.character__param__list', $i)->find('tr') as $node) {
+            /** @var NodeList $trs */
+            $trs = $box->find('.character__param__list', $i);
+            if (empty($trs)) {
+                continue;
+            }
+            
+            foreach($trs->find('tr') as $node) {
                 $this->profile->Attributes[] = $this->parseAttributeCommon($node);
             }
         }
