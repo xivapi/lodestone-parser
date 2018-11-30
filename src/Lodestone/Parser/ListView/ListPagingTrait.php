@@ -22,8 +22,8 @@ trait ListPagingTrait
             $this->parseProfile();
         }
     
-        $this->pageCount();
         $this->parseResults();
+        $this->pageCount();
 
         return $this->list;
     }
@@ -40,10 +40,12 @@ trait ListPagingTrait
         
         $this->list->Pagination->Page = filter_var($current, FILTER_SANITIZE_NUMBER_INT);
         $this->list->Pagination->PageTotal = filter_var($total, FILTER_SANITIZE_NUMBER_INT);
-        $this->list->Pagination->setNextPrevious();
         
         // member count
         $count = $this->getDocument()->find('.parts__total', 0)->plaintext;
         $this->list->Pagination->ResultsTotal = filter_var($count, FILTER_SANITIZE_NUMBER_INT);
+
+        // set next+prev
+        $this->list->Pagination->setNextPrevious();
     }
 }
