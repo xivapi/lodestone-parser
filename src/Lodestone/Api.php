@@ -3,14 +3,7 @@
 namespace Lodestone;
 
 use Lodestone\{
-    Entity\Character\Achievements,
-    Entity\Character\CharacterProfile,
-    Entity\FreeCompany\FreeCompany,
-    Entity\FreeCompany\FreeCompanyMembers,
-    Entity\Linkshell\Linkshell,
-    Entity\ListView\ListView,
-    Entity\PvPTeam\PvPTeam,
-    Http\Routes
+    Entity\Character\Achievements, Entity\Character\CharacterProfile, Entity\FreeCompany\AchievementsFull, Entity\FreeCompany\FreeCompany, Entity\FreeCompany\FreeCompanyFull, Entity\ListView\ListView, Exceptions\AchievementsPrivateException, Game\AchievementsCategory, Http\Routes
 };
 
 use Lodestone\Parser\{
@@ -41,7 +34,7 @@ class Api
      * @param bool $server
      * @param bool $page
      */
-    public function searchCharacter($name, $server = false, $page = 1): ListView
+    public function searchCharacter(string $name, string $server = null, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -57,7 +50,7 @@ class Api
      * @param bool $server
      * @param bool $page
      */
-    public function searchFreeCompany($name, $server = false, $page = 1): ListView
+    public function searchFreeCompany(string $name, string $server = null, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -73,7 +66,7 @@ class Api
      * @param $server
      * @param $page
      */
-    public function searchLinkshell($name, $server = false, $page = 1): ListView
+    public function searchLinkshell(string $name, string $server = null, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -89,7 +82,7 @@ class Api
      * @param $server
      * @param $page
      */
-    public function searchPvPTeam($name, $server = false, $page = 1): ListView
+    public function searchPvPTeam(string $name, string $server = null, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('q', str_ireplace(' ', '+', $name));
@@ -103,7 +96,7 @@ class Api
     /**
      * @param $id
      */
-    public function getCharacter($id): CharacterProfile
+    public function getCharacter(int $id): CharacterProfile
     {
         $url = sprintf(Routes::LODESTONE_CHARACTERS_URL, $id);
         return (new CharacterParser($id))->url($url)->parse();
@@ -113,7 +106,7 @@ class Api
      * @param $id
      * @param $page
      */
-    public function getCharacterFriends($id, $page = 1): ListView
+    public function getCharacterFriends(int $id, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
@@ -126,7 +119,7 @@ class Api
      * @param $id
      * @param $page
      */
-    public function getCharacterFollowing($id, $page = 1): ListView
+    public function getCharacterFollowing(int $id, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
@@ -141,10 +134,35 @@ class Api
      * @param bool $includeUnobtained = false
      * @param int $category = false
      */
-    public function getCharacterAchievements($id, $kindId = 1, bool $nonObtained = false): Achievements
+    public function getCharacterAchievements(int $id, int $kindId = 1, bool $nonObtained = false): Achievements
     {
         $url = sprintf(Routes::LODESTONE_ACHIEVEMENTS_URL, $id, $kindId);
         return (new AchievementsParser($kindId))->url($url)->parse($nonObtained);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws AchievementsPrivateException
+     */
+    public function getCharacterAchievementsFull(int $id): AchievementsFull
+    {
+        $obj = new AchievementsFull();
+        foreach(AchievementsCategory::LIST as $kindId => $kindName) {
+            try {
+                $obj->addAchievements(
+                    $this->getCharacterAchievements($id, $kindId)
+                );
+            } catch (AchievementsPrivateException $ex) {
+                // if the first kind threw an exception, achievements are private
+                // otherwise it is likely category 13
+                if ($kindId === 1) {
+                    throw $ex;
+                }
+            }
+        }
+
+        return $obj;
     }
 
     /**
@@ -160,7 +178,7 @@ class Api
      * @param $id
      * @param bool $page
      */
-    public function getFreeCompanyMembers($id, $page = 1): ListView
+    public function getFreeCompanyMembers($id, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
@@ -171,9 +189,36 @@ class Api
 
     /**
      * @param $id
+     * @return array
+     */
+    public function getFreeCompanyFull($id): FreeCompanyFull
+    {
+        $obj = new FreeCompanyFull();
+        $obj->ID = $id;
+
+        // grab FC Profile
+        $obj->Profile = $this->getFreeCompany($id);
+
+        // grab first page and add those members
+        $first = $this->getFreeCompanyMembers($id, 1);
+        $obj->addMembers($first);
+
+        // if there is more than 1 page, add all other members
+        if ($first->Pagination->PageTotal > 1) {
+            foreach (range(2, $first->Pagination->PageTotal) as $page) {
+                $members = $this->getFreeCompanyMembers($id, $page);
+                $obj->addMembers($members);
+            }
+        }
+
+        return $obj;
+    }
+
+    /**
+     * @param $id
      * @param bool $page
      */
-    public function getLinkshellMembers($id, $page = 1): ListView
+    public function getLinkshellMembers($id, int $page = 1): ListView
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->add('page', $page);
@@ -309,7 +354,7 @@ class Api
      * @param array $params
      * @return array
      */
-    public function getFeast($season = false, $params = []): array
+    public function getFeast($season = false, array $params = []): array
     {
         if ($season !== false && is_numeric($season)) {
             $url = sprintf(Routes::LODESTONE_FEAST_SEASON, $season);
@@ -329,7 +374,7 @@ class Api
      * @param array $params
      * @return array
      */
-    public function getDeepDungeon($params = []): array
+    public function getDeepDungeon(array $params = []): array
     {
         $urlBuilder = new UrlBuilder();
         $urlBuilder->addMulti($params);

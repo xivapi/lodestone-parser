@@ -28,8 +28,8 @@ class CharacterProfile extends AbstractEntity
     public $ActiveClassJob;
     public $Minions = [];
     public $Mounts = [];
-    
     public $ParseDate;
+
     public function __construct()
     {
         $this->ParseDate = time();

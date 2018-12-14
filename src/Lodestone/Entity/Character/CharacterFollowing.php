@@ -2,20 +2,13 @@
 
 namespace Lodestone\Entity\Character;
 
-use Lodestone\{
-    Entity\AbstractEntity,
-    Entity\Traits\CharacterListTrait,
-    Entity\Traits\ListTrait
-};
+use Lodestone\Entity\AbstractEntity;
 
 class CharacterFollowing extends AbstractEntity
 {
-    use ListTrait;
-    use CharacterListTrait;
-    
     public $ID;
-
     public $ParseDate;
+
     public function __construct()
     {
         $this->ParseDate = time();

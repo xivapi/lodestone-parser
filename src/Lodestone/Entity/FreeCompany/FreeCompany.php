@@ -23,8 +23,8 @@ class FreeCompany extends AbstractEntity
     public $Recruitment;
     public $Focus = [];
     public $Seeking = [];
-
     public $ParseDate;
+
     public function __construct()
     {
         $this->ParseDate = time();

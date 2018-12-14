@@ -2,23 +2,16 @@
 
 namespace Lodestone\Entity\PvPTeam;
 
-use Lodestone\{
-    Entity\Traits\CharacterListTrait,
-    Entity\AbstractEntity,
-    Entity\Traits\ListTrait
-};
+use Lodestone\Entity\AbstractEntity;
 
 class PvPTeam extends AbstractEntity
 {
-    use ListTrait;
-    use CharacterListTrait;
-
     public $ID;
     public $Crest = [];
     public $Name;
     public $Server;
-
     public $ParseDate;
+
     public function __construct()
     {
         $this->ParseDate = time();
