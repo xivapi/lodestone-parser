@@ -6,6 +6,7 @@ use Lodestone\{
     Entity\Character\Achievements,
     Entity\Character\CharacterProfile,
     Entity\Character\AchievementsFull,
+    Entity\Linkshell\LinkshellFull,
     Entity\FreeCompany\FreeCompany,
     Entity\FreeCompany\FreeCompanyFull,
     Entity\ListView\ListView,
@@ -233,6 +234,30 @@ class Api
 
         $url = sprintf(Routes::LODESTONE_LINKSHELL_MEMBERS_URL, $id) . $urlBuilder->get();
         return (new LinkshellParser())->url($url)->parse();
+    }
+
+    /**
+     * @param $id
+     * @return LinkshellFull
+     */
+    public function getLinkshellMembersFull($id)
+    {
+        $obj = new LinkshellFull();
+        $obj->ID = $id;
+
+        // grab first page and add those members
+        $first = $this->getLinkshellMembers($id, 1);
+        $obj->addMembers($first);
+
+        // if there is more than 1 page, add all other members
+        if ($first->Pagination->PageTotal > 1) {
+            foreach (range(2, $first->Pagination->PageTotal) as $page) {
+                $members = $this->getLinkshellMembers($id, $page);
+                $obj->addMembers($members);
+            }
+        }
+
+        return $obj;
     }
     
     /**
