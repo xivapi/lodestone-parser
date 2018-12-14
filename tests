@@ -44,9 +44,9 @@ Assert::assertNotEmpty($api->getFreeCompanyMembers('9231253336202687179')->Resul
 Assert::assertNotEmpty($api->getLinkshellMembers('19984723346535274')->Results);
 Assert::assertNotEmpty($api->getPvPTeamMembers('3ff84f9192055a769e7ac8668c107507c17325c3')->Results);
 Assert::assertNotEmpty($api->searchCharacter('Premium Virtue')->Results);
-Assert::assertNotEmpty($api->searchFreeCompany('pro')->Results);
-Assert::assertNotEmpty($api->searchLinkshell('pro')->Results);
-Assert::assertNotEmpty($api->searchPvPTeam('pro')->Results);
+Assert::assertNotEmpty($api->searchFreeCompany('a')->Results);
+Assert::assertNotEmpty($api->searchLinkshell('a')->Results);
+Assert::assertNotEmpty($api->searchPvPTeam('a')->Results);
 Assert::assertNotEmpty($api->getLodestoneBanners());
 Assert::assertNotEmpty($api->getLodestoneNews());
 Assert::assertNotEmpty($api->getLodestoneTopics());
