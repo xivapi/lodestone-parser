@@ -1,9 +1,8 @@
 <?php
 
-namespace Lodestone\Entity\FreeCompany;
+namespace Lodestone\Entity\Character;
 
 use Lodestone\Entity\AbstractEntity;
-use Lodestone\Entity\Character\Achievements;
 
 class AchievementsFull extends AbstractEntity
 {

@@ -1,9 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- *
  * CLI tool to quickly test/debug specific API methods.
- *
  */
 
 // composer auto loader

@@ -5,7 +5,7 @@ namespace Lodestone;
 use Lodestone\{
     Entity\Character\Achievements,
     Entity\Character\CharacterProfile,
-    Entity\FreeCompany\AchievementsFull,
+    Entity\Character\AchievementsFull,
     Entity\FreeCompany\FreeCompany,
     Entity\FreeCompany\FreeCompanyFull,
     Entity\ListView\ListView,
