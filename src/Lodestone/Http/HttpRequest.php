@@ -2,7 +2,9 @@
 
 namespace Lodestone\Http;
 
-use Lodestone\Exceptions\{MaintenanceException,NotFoundException};
+use Lodestone\Exceptions\{
+    ForbiddenException, MaintenanceException, NotFoundException
+};
 use Lodestone\Helpers\Logger;
 
 class HttpRequest
@@ -51,6 +53,10 @@ class HttpRequest
         
         if ($httpCode == 404) {
             throw new NotFoundException();
+        }
+        
+        if ($httpCode == 403) {
+            throw new ForbiddenException();
         }
         
         return $data;

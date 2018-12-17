@@ -192,6 +192,7 @@ class Api
      * @param int $type = 1
      * @param bool $includeUnobtained = false
      * @param int $category = false
+     * @throws AchievementsPrivateException
      */
     public function getCharacterAchievements(int $id, int $kindId = 1, bool $nonObtained = false): Achievements
     {
@@ -212,7 +213,7 @@ class Api
                 $obj->addAchievements(
                     $this->getCharacterAchievements($id, $kindId)
                 );
-            } catch (AchievementsPrivateException $ex) {
+            } catch (\Exception $ex) {
                 // if the first kind threw an exception, achievements are private
                 // otherwise it is likely category 13
                 if ($kindId === 1) {
