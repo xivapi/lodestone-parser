@@ -4,6 +4,8 @@ namespace Lodestone;
 
 use Lodestone\{
     Entity\Character\Achievements,
+    Entity\Character\CharacterFollowingFull,
+    Entity\Character\CharacterFriendsFull,
     Entity\Character\CharacterProfile,
     Entity\Character\AchievementsFull,
     Entity\Linkshell\LinkshellFull,
@@ -125,6 +127,30 @@ class Api
     }
 
     /**
+     * @param int $id
+     * @return CharacterFriendsFull
+     */
+    public function getCharacterFriendsFull(int $id): CharacterFriendsFull
+    {
+        $obj = new CharacterFriendsFull();
+        $obj->ID = $id;
+
+        // grab first page and add those members
+        $first = $this->getCharacterFriends($id, 1);
+        $obj->addMembers($first);
+
+        // if there is more than 1 page, add all other members
+        if ($first->Pagination->PageTotal > 1) {
+            foreach (range(2, $first->Pagination->PageTotal) as $page) {
+                $members = $this->getCharacterFriends($id, $page);
+                $obj->addMembers($members);
+            }
+        }
+
+        return $obj;
+    }
+
+    /**
      * @param $id
      * @param $page
      */
@@ -135,6 +161,30 @@ class Api
 
         $url = sprintf(Routes::LODESTONE_CHARACTERS_FOLLOWING_URL, $id);
         return (new CharacterFollowingParser())->url($url . $urlBuilder->get())->parse();
+    }
+
+    /**
+     * @param int $id
+     * @return CharacterFollowingFull
+     */
+    public function getCharacterFollowingFull(int $id): CharacterFollowingFull
+    {
+        $obj = new CharacterFollowingFull();
+        $obj->ID = $id;
+
+        // grab first page and add those members
+        $first = $this->getCharacterFollowing($id, 1);
+        $obj->addMembers($first);
+
+        // if there is more than 1 page, add all other members
+        if ($first->Pagination->PageTotal > 1) {
+            foreach (range(2, $first->Pagination->PageTotal) as $page) {
+                $members = $this->getCharacterFollowing($id, $page);
+                $obj->addMembers($members);
+            }
+        }
+
+        return $obj;
     }
 
     /**
@@ -240,7 +290,7 @@ class Api
      * @param $id
      * @return LinkshellFull
      */
-    public function getLinkshellMembersFull($id)
+    public function getLinkshellMembersFull($id): LinkshellFull
     {
         $obj = new LinkshellFull();
         $obj->ID = $id;
