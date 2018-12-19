@@ -52,7 +52,7 @@ trait TraitProfile
 
         // title
         if ($title = $this->getArrayFromRange('frame__chara__title', 0, $html)) {
-            $this->profile->Title = trim(strip_tags($title[0]));
+            $this->profile->Title = html_entity_decode(trim(strip_tags($title[0])), ENT_QUOTES, "UTF-8");
         }
     }
 
