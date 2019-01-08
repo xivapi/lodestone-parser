@@ -38,5 +38,5 @@ if (!$func || !in_array($func, get_class_methods($api))) {
 // ls = 19984723346535274
 
 $data = call_user_func_array([$api, $func], [$arg1, $arg2, $arg3]);
-print_r($data ? (method_exists($data, 'toArray') ? $data->toArray() : $data) : "\nNo data, was the command correct? > ". $func);
+print_r($data ? (method_exists($data, 'toArray') ? $data->toArray()['ClassJobs'] : $data) : "\nNo data, was the command correct? > ". $func);
 print_r("\n");

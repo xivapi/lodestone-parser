@@ -35,13 +35,13 @@ trait TraitClassJob
 
                 // level
                 $level = trim($li->find('.character__job__level', 0)->plaintext);
-                $level = ($level == '-') ? 0 : intval($level);
+                $level = ($level == '--') ? 0 : intval($level);
                 $role->Level = $level;
 
                 // current exp
                 list($current, $max) = explode('/', $li->find('.character__job__exp', 0)->plaintext);
-                $current = ($current == '-') ? 0 : intval($current);
-                $max = ($max == '-') ? 0 : intval($max);
+                $current = (trim($current) == '--') ? 0 : filter_var(trim($current), FILTER_SANITIZE_NUMBER_INT);
+                $max = (trim($max) == '--') ? 0 : filter_var(trim($max), FILTER_SANITIZE_NUMBER_INT);
 
                 $role->ExpLevel     = $current;
                 $role->ExpLevelMax  = $max;

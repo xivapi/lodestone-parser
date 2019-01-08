@@ -61,6 +61,8 @@ class ClassJobsData
         33 => [ 33, 33, 'Astrologian' ],
         34 => [ 34, 34, 'Samurai' ],
         35 => [ 35, 35, 'Red Mage' ],
+
+        36 => [ 36, 36, 'Blue Mage' ],
     ];
     
     /**
