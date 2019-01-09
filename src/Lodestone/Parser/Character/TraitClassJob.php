@@ -40,8 +40,8 @@ trait TraitClassJob
 
                 // current exp
                 list($current, $max) = explode('/', $li->find('.character__job__exp', 0)->plaintext);
-                $current = (trim($current) == '--') ? 0 : filter_var(trim($current), FILTER_SANITIZE_NUMBER_INT);
-                $max = (trim($max) == '--') ? 0 : filter_var(trim($max), FILTER_SANITIZE_NUMBER_INT);
+                $current = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
+                $max     = filter_var(trim(str_ireplace('-', null, $max)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
 
                 $role->ExpLevel     = $current;
                 $role->ExpLevelMax  = $max;
