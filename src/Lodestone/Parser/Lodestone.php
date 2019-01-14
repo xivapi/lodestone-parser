@@ -2,6 +2,7 @@
 
 namespace Lodestone\Parser;
 
+use Carbon\Carbon;
 use Lodestone\Http\Routes;
 use Lodestone\Parser\Html\ParserHelper;
 
@@ -95,6 +96,92 @@ class Lodestone extends ParserHelper
         }
         
         return $results;
+    }
+    
+    /**
+     * todo - this is dreadful, but works, should be improved, if i care to bother.
+     * @return object
+     */
+    public function parseMaintenanceTime()
+    {
+        $this->initialize();
+    
+        // grab message post
+        $text = $this->getDocumentFromClassname('.news__detail__wrapper')->innerHtml();
+        $text = str_ireplace('<br/>', PHP_EOL, $text);
+        $text = strip_tags($text);
+        $text = explode(PHP_EOL, trim($text));
+
+        $time = null;
+        foreach ($text as $i => $line) {
+            if (stripos($line, '[Date &amp; Time]') !== false) {
+                // next line will be the time
+                $time = trim($text[$i + 1]);
+                break;
+            }
+        }
+        
+        
+        if (!$time) {
+            return null;
+        }
+        
+        // remove periods
+        $time = str_ireplace('.', null, $time);
+        
+        // remove (PST)
+        $time = trim(str_ireplace('(PST)', null, $time));
+        
+        // hacky but will do...
+        $year = date('Y');
+        $time = explode($year, $time);
+        $date = trim(str_ireplace(',', null, $time[0]));
+        $date = explode(' ', $date);
+    
+        $months = [
+            'Jan' => '01',
+            'Feb' => '02',
+            'Mar' => '03',
+            'Apr' => '04',
+            'May' => '05',
+            'Jun' => '06',
+            'Jul' => '07',
+            'Aug' => '08',
+            'Sep' => '09',
+            'Oct' => '10',
+            'Nov' => '11',
+            'Dec' => '12'
+        ];
+        
+        $month = $months[$date[0]];
+        $day   = $date[1];
+        
+        $time = explode(' to ', trim($time[1]));
+        $from = trim($time[0]);
+        $to   = trim($time[1]);
+        
+        $from = explode(' ', $from);
+        $to   = explode(' ', $to);
+        
+        $fromTime = explode(':', $from[0]);
+        $toTime   = explode(':', $to[0]);
+        
+        $fromTime[0] = $from[1] == 'pm' ? $fromTime[0] + 12 : $fromTime[0];
+        $toTime[0]   = $to[1] == 'pm' ? $toTime[0] + 12 : $toTime[0];
+        
+        // format times into a common format
+        $dates = (Object)[
+            'from' => "{$year}-{$month}-{$day} {$fromTime[0]}:{$fromTime[1]}:00",
+            'to'   => "{$year}-{$month}-{$day} {$toTime[0]}:{$toTime[1]}:00",
+        ];
+    
+        $dates->from = Carbon::createFromFormat('Y-m-d G:i:s', $dates->from, new \DateTimeZone('America/Los_Angeles'));
+        $dates->to   = Carbon::createFromFormat('Y-m-d G:i:s', $dates->to, new \DateTimeZone('America/Los_Angeles'));
+        
+        $dates->from = $dates->from->timestamp;
+        $dates->to = $dates->to->timestamp;
+        
+        return $dates;
     }
     
     /**

@@ -361,6 +361,58 @@ class Api
     {
         return $this->getLodeStoneInstance()->url(Routes::LODESTONE_MAINTENANCE)->parseMaintenance();
     }
+    
+    /**
+     * @return array
+     */
+    public function getLodestoneMaintenanceTimes(): array
+    {
+        $response = [];
+        
+        // go back a maximum of 14 days
+        $dateDeadline = time() - (60*60*24*14);
+        
+        /** @var array $entry */
+        foreach ($this->getLodestoneMaintenance() as $entry) {
+            // finish if out dated or the tag is not a "Maintenance" tag.
+            if ($entry['Time'] < $dateDeadline || $entry['Tag'] != '[Maintenance]') {
+                break;
+            }
+
+            // detect entry type
+            $type = 'unknown';
+            if (stripos($entry['Title'], 'Companion App Maintenance') !== false) {
+                $type = 'companion';
+            } elseif (stripos($entry['Title'], 'The Lodestone Maintenance') !== false) {
+                $type = 'lodestone';
+            } elseif (stripos($entry['Title'], 'All Worlds Maintenance') !== false) {
+                $type = 'all_worlds';
+            } elseif (stripos($entry['Title'], 'Mog Station Maintenance') !== false) {
+                $type = 'mog_station';
+            } elseif (stripos($entry['Title'], 'Support System Maintenance') !== false) {
+                $type = 'support_system';
+            } elseif (stripos($entry['Title'], 'EU Data Center Emergency Maintenance') !== false) {
+                $type = 'datacenter_eu';
+            } elseif (stripos($entry['Title'], 'All JP Worlds Emergency Maintenance') !== false) {
+                $type = 'datacenter_jp';
+            } elseif (stripos($entry['Title'], 'Square Enix Account Management System Maintenance') !== false) {
+                $type = 'account_management';
+            } elseif (stripos($entry['Title'], '"PSN" Maintenance') !== false) {
+                $type = 'psn';
+            } elseif (stripos($entry['Title'], 'FINAL FANTASY XIV Forums Maintenance') !== false) {
+                $type = 'forums';
+            }
+            
+            $response[] = [
+                'type'          => $type,
+                'time'          => $this->getLodeStoneInstance()->url($entry['Url'])->parseMaintenanceTime(),
+                'emergency'     => stripos($entry['Title'], 'Emergency') !== false,
+                'entry'         => $entry,
+            ];
+        }
+
+        return $response;
+    }
 
     /**
      * @return array|bool
