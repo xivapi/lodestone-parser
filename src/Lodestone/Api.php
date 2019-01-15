@@ -35,6 +35,11 @@ use Lodestone\Parser\{
 
 class Api
 {
+    const NAME_REPLACEMENT = [
+        [' ', '’'],
+        ['+', "'"],
+    ];
+    
     public function getLodeStoneInstance(): Lodestone
     {
         return new Lodestone();
@@ -47,8 +52,10 @@ class Api
      */
     public function searchCharacter(string $name, string $server = null, int $page = 1): ListView
     {
+        $name = str_ireplace(self::NAME_REPLACEMENT[0], self::NAME_REPLACEMENT[1], $name);
+        
         $urlBuilder = new UrlBuilder();
-        $urlBuilder->add('q', str_ireplace(' ', '+', '"'. $name .'"'));
+        $urlBuilder->add('q', '"'. $name .'"');
         $urlBuilder->add('worldname', $server);
         $urlBuilder->add('page', $page);
 
@@ -63,8 +70,10 @@ class Api
      */
     public function searchFreeCompany(string $name, string $server = null, int $page = 1): ListView
     {
+        $name = str_ireplace(self::NAME_REPLACEMENT[0], self::NAME_REPLACEMENT[1], $name);
+        
         $urlBuilder = new UrlBuilder();
-        $urlBuilder->add('q', str_ireplace(' ', '+', '"'. $name .'"'));
+        $urlBuilder->add('q', '"'. $name .'"');
         $urlBuilder->add('worldname', $server);
         $urlBuilder->add('page', $page);
 
@@ -79,8 +88,10 @@ class Api
      */
     public function searchLinkshell(string $name, string $server = null, int $page = 1): ListView
     {
+        $name = str_ireplace(self::NAME_REPLACEMENT[0], self::NAME_REPLACEMENT[1], $name);
+        
         $urlBuilder = new UrlBuilder();
-        $urlBuilder->add('q', str_ireplace(' ', '+', '"'. $name .'"'));
+        $urlBuilder->add('q', '"'. $name .'"');
         $urlBuilder->add('worldname', $server);
         $urlBuilder->add('page', $page);
 
@@ -95,8 +106,10 @@ class Api
      */
     public function searchPvPTeam(string $name, string $server = null, int $page = 1): ListView
     {
+        $name = str_ireplace(self::NAME_REPLACEMENT[0], self::NAME_REPLACEMENT[1], $name);
+        
         $urlBuilder = new UrlBuilder();
-        $urlBuilder->add('q', str_ireplace(' ', '+', '"'. $name .'"'));
+        $urlBuilder->add('q', '"'. $name .'"');
         $urlBuilder->add('worldname', $server);
         $urlBuilder->add('page', $page);
 
