@@ -274,9 +274,9 @@ class Lodestone extends ParserHelper
                 'Leaderboard' => [
                     'Rank'         => $node->find('.wolvesden__ranking__result__order', 0)->plaintext,
                     'RankPrevious' => trim($node->find('.wolvesden__ranking__td__prev_order', 0)->plaintext),
-                    'Matches'      => trim($node->find('.wolvesden__ranking__result__match_count', 0)->plaintext),
                     'Rating'       => trim($node->find('.wolvesden__ranking__result__match_rate', 0)->plaintext),
-                    // these may not exist on the page
+                    // these may not exist on the page (some reason from Season 6 this is all gone..)
+                    'Matches'      => trim($node->find('.wolvesden__ranking__result__match_count', 0)->plaintext),
                     'RankImage'    => @trim($node->find('.wolvesden__ranking__td__rank img', 0)->src),
                     'WinCount'     => @trim($node->find('.wolvesden__ranking__result__win_count', 0)->plaintext),
                     'WinRate'      => @str_ireplace('%', null, trim($node->find('.wolvesden__ranking__result__winning_rate', 0)->plaintext)),
