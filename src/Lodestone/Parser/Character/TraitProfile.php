@@ -59,7 +59,7 @@ trait TraitProfile
     protected function parseProfileBio()
     {
         $bio = $this->getArrayFromRange('character__selfintroduction', 'btn__comment');
-        $bio = trim($bio[1]);
+        $bio = trim($bio[0]);
         $bio = html_entity_decode($bio, ENT_QUOTES, "UTF-8");
 
         if ($bio = strip_tags($bio)) {
