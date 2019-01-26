@@ -57,4 +57,7 @@ class Routes
     // forums
     const LODESTONE_FORUMS = 'https://forum.square-enix.com/ffxiv/';
     const LODESTONE_FORUMS_HOMEPAGE = self::LODESTONE_FORUMS .'forum.php';
+    
+    // database
+    const LODESTONE_DATABASE_ITEM = 'https://eu.finalfantasyxiv.com/lodestone/playguide/db/item/%s/';
 }

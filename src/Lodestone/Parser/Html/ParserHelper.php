@@ -73,6 +73,21 @@ class ParserHelper
         $this->htmlOriginal = $this->html;
         $this->setDocument($this->html);
     }
+    
+    /**
+     * Default setup that database pages use.
+     */
+    protected function initializeDatabase()
+    {
+        // setup html for a database page
+        $this->ensureHtml();
+        $this->html = $this->trim($this->html, 'class="db_cnts"', 'class="comment_postimg"');
+    
+        // ensure that there is something left after trimming
+        $this->ensureHtml();
+        $this->htmlOriginal = $this->html;
+        $this->setDocument($this->html);
+    }
 
     /**
      * Ensures the HTML exists and is not empty.

@@ -36,6 +36,8 @@ trait TraitGear
             $item->ID = trim(explode('/', $lodestoneId[1])[5]);
 
             // get category
+            // this is a bit buggy for crafters, eg: https://eu.finalfantasyxiv.com/lodestone/character/17650647
+            // as it's just looking for "Two-handed" and ignoring things like "Carpenters Secondary"
             $category = $this->getArrayFromRange('db-tooltip__item__category', 1, $html);
             $category = trim(strip_tags($category[1]));
             $category = explode("'", $category)[0];

@@ -2,36 +2,34 @@
 
 namespace Lodestone;
 
-use Lodestone\{
-    Entity\Character\Achievements,
-    Entity\Character\CharacterFollowingFull,
-    Entity\Character\CharacterFriendsFull,
-    Entity\Character\CharacterProfile,
-    Entity\Character\AchievementsFull,
-    Entity\Linkshell\LinkshellFull,
-    Entity\FreeCompany\FreeCompany,
-    Entity\FreeCompany\FreeCompanyFull,
-    Entity\ListView\ListView,
-    Exceptions\AchievementsPrivateException,
-    Game\AchievementsCategory,
-    Http\Routes
-};
+use Lodestone\Entity\Character\Achievements;
+use Lodestone\Entity\Character\CharacterFollowingFull;
+use Lodestone\Entity\Character\CharacterFriendsFull;
+use Lodestone\Entity\Character\CharacterProfile;
+use Lodestone\Entity\Character\AchievementsFull;
+use Lodestone\Entity\Database\Item;
+use Lodestone\Entity\Linkshell\LinkshellFull;
+use Lodestone\Entity\FreeCompany\FreeCompany;
+use Lodestone\Entity\FreeCompany\FreeCompanyFull;
+use Lodestone\Entity\ListView\ListView;
+use Lodestone\Exceptions\AchievementsPrivateException;
+use Lodestone\Game\AchievementsCategory;
+use Lodestone\Http\Routes;
 
-use Lodestone\Parser\{
-    Character\Parser as CharacterParser,
-    Character\Search as CharacterSearch,
-    CharacterFriends\Parser as CharacterFriendsParser,
-    CharacterFollowing\Parser as CharacterFollowingParser,
-    Achievements\Parser as AchievementsParser,
-    FreeCompany\Parser as FreeCompanyParser,
-    FreeCompany\Search as FreeCompanySearch,
-    FreeCompanyMembers\Parser as FreeCompanyMembersParser,
-    Linkshell\Parser as LinkshellParser,
-    Linkshell\Search as LinkshellSearch,
-    PvPTeam\Parser as PvPTeamParser,
-    PvPTeam\Search as PvPTeamSearch,
-    Lodestone
-};
+use Lodestone\Parser\Character\Parser as CharacterParser;
+use Lodestone\Parser\Character\Search as CharacterSearch;
+use Lodestone\Parser\CharacterFriends\Parser as CharacterFriendsParser;
+use Lodestone\Parser\CharacterFollowing\Parser as CharacterFollowingParser;
+use Lodestone\Parser\Achievements\Parser as AchievementsParser;
+use Lodestone\Parser\FreeCompany\Parser as FreeCompanyParser;
+use Lodestone\Parser\FreeCompany\Search as FreeCompanySearch;
+use Lodestone\Parser\FreeCompanyMembers\Parser as FreeCompanyMembersParser;
+use Lodestone\Parser\Linkshell\Parser as LinkshellParser;
+use Lodestone\Parser\Linkshell\Search as LinkshellSearch;
+use Lodestone\Parser\PvPTeam\Parser as PvPTeamParser;
+use Lodestone\Parser\PvPTeam\Search as PvPTeamSearch;
+use Lodestone\Parser\Lodestone as Lodestone;
+use Lodestone\Parser\Database\ItemParser;
 
 class Api
 {
@@ -529,5 +527,15 @@ class Api
         $urlBuilder->addMulti($params);
 
         return (new Lodestone())->url(Routes::LODESTONE_DEEP_DUNGEON . $urlBuilder->get())->parseDeepDungeon();
+    }
+    
+    /**
+     * @param string $id
+     * @return Item
+     */
+    public function getDatabaseItem(string $id): Item
+    {
+        $url = sprintf(Routes::LODESTONE_DATABASE_ITEM, $id);
+        return (new ItemParser($id))->url($url)->parse();
     }
 }
