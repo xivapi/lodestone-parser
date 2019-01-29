@@ -22,7 +22,7 @@ trait TraitGear
 
             // get name
             $name = $this->getArrayFromRange('db-tooltip__item__name', 1, $html);
-
+            
             // If this slot has no item name html
             // it's safe to assume empty slot
             if (!$name) {
@@ -38,18 +38,22 @@ trait TraitGear
             // get category
             // this is a bit buggy for crafters, eg: https://eu.finalfantasyxiv.com/lodestone/character/17650647
             // as it's just looking for "Two-handed" and ignoring things like "Carpenters Secondary"
-            $category = $this->getArrayFromRange('db-tooltip__item__category', 1, $html);
-            $category = trim(strip_tags($category[1]));
-            $category = explode("'", $category)[0];
-            $item->Category = trim(str_ireplace(['Two-handed', 'One-handed'], null, $category));
+            $category   = $this->getArrayFromRange('db-tooltip__item__category', 1, $html);
+            $category   = trim(strip_tags($category[1]));
+            $catData    = explode("'", $category);
+            $catName    = $catData[0];
+            $catSecond  = $catData[1] ?? null;
+            $catName    = trim(str_ireplace(['Two-handed', 'One-handed'], null, $catName));
+            $catName    = ucwords(strtolower($catName));
+            $item->Category = $catName;
 
             // get slot from category
-            $slot = ($i == 0) ? 'MainHand' : ucwords(strtolower($category));
+            $slot = ($i == 0) ? 'MainHand' : $catName;
 
             // if item is secondary tool or shield, its off-hand
-            $slot = (stripos($slot, 'secondary tool') !== false) ? 'OffHand' : $slot;
+            $slot = (stripos($catSecond, 'secondary tool') !== false) ? 'OffHand' : $slot;
             $slot = ($slot == 'Shield') ? 'OffHand' : $slot;
-
+    
             // if item is a ring, check if its ring 1 or 2
             if ($slot == 'Ring') {
                 $slot = isset($this->profile->Gear['Ring1']) ? 'Ring2' : 'Ring1';
