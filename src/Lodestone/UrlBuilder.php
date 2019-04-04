@@ -99,6 +99,10 @@ class UrlBuilder
             case 'acn':
             case 'shm':
                 $hash = '9ef51b0f36842b9566f40c5e3de2c55a672e4607'; break;
+            case 'sam':
+                $hash = '7c3485028121b84720df20de7772371d279d097d'; break;
+            case 'rdm':
+                $hash = '55a98ea6cf180332222184e9fb788a7941a03ec3'; break;
         }
 
         return $hash;
