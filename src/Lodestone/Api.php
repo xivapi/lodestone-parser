@@ -530,6 +530,20 @@ class Api
     }
     
     /**
+     * Get params from: http://eu.finalfantasyxiv.com/lodestone/ranking/deepdungeon/
+     *
+     * @param array $params
+     * @return array
+     */
+    public function getHeavenOnHigh(array $params = []): array
+    {
+        $urlBuilder = new UrlBuilder();
+        $urlBuilder->addMulti($params);
+        
+        return (new Lodestone())->url(Routes::LODESTONE_HEAVEN_ON_HIGH . $urlBuilder->get())->parseDeepDungeon();
+    }
+    
+    /**
      * @param string $id
      * @return Item
      */

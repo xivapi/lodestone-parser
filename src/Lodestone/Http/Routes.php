@@ -47,6 +47,7 @@ class Routes
 
     // deep dungeon
     const LODESTONE_DEEP_DUNGEON = self::LODESTONE_URL .'lodestone/ranking/deepdungeon/';
+    const LODESTONE_HEAVEN_ON_HIGH = self::LODESTONE_URL .'lodestone/ranking/deepdungeon2/';
 
     // world status
     const LODESTONE_WORLD_STATUS = self::LODESTONE_URL .'lodestone/worldstatus/';
