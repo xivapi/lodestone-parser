@@ -39,7 +39,7 @@ trait TraitClassJob
                 $role->Level = $level;
 
                 //specialist 
-                !empty($li->find('.character__job__name--meister', 0)->plaintext);
+                $role->IsSpecialised = !empty($li->find('.character__job__name--meister', 0)->plaintext);
 
                 // current exp
                 list($current, $max) = explode('/', $li->find('.character__job__exp', 0)->plaintext);
