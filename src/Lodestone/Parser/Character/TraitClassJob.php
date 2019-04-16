@@ -38,6 +38,9 @@ trait TraitClassJob
                 $level = ($level == '--') ? 0 : intval($level);
                 $role->Level = $level;
 
+                //specialist 
+                $role->IsSpecialised = !empty($li->find('.character__job__name--meister', 0)->plaintext);
+
                 // current exp
                 list($current, $max) = explode('/', $li->find('.character__job__exp', 0)->plaintext);
                 $current = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
