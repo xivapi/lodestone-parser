@@ -268,7 +268,7 @@ class Lodestone extends ParserHelper
                 'Character' => [
                     'ID'        => explode('/', $node->getAttribute('data-href'))[3],
                     'Name'      => trim($node->find('.wolvesden__ranking__result__name h3', 0)->plaintext),
-                    'Server'    => trim( $node->find('.wolvesden__ranking__result__world', 0)->plaintext),
+                    'Server'    => explode(' ', trim( $node->find('.wolvesden__ranking__result__world', 0)->plaintext))[0],
                     'Avatar'    => explode('?', $node->find('.wolvesden__ranking__result__face img', 0)->src)[0],
                 ],
                 'Leaderboard' => [
@@ -310,7 +310,7 @@ class Lodestone extends ParserHelper
                 'Character' => [
                     'ID'        => explode('/', $node->getAttribute('data-href'))[3],
                     'Name'      => trim($node->find('.deepdungeon__ranking__result__name h3', 0)->plaintext),
-                    'Server'    =>trim( $node->find('.deepdungeon__ranking__result__world', 0)->plaintext),
+                    'Server'    => explode(' ', trim( $node->find('.deepdungeon__ranking__result__world', 0)->plaintext))[0],
                     'Avatar'    => explode('?', $node->find('.deepdungeon__ranking__face__inner img', 0)->src)[0],
                 ],
                 'ClassJob' => [

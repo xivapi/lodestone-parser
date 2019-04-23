@@ -48,7 +48,8 @@ trait TraitProfile
         
         // server
         $server = $this->getArrayFromRange('frame__chara__world', 0, $html);
-        $this->profile->Server = trim(strip_tags($server[0]));
+        $server = trim(explode('&nbsp;', strip_tags($server[0]))[0]);
+        $this->profile->Server = $server;
 
         // title
         if ($title = $this->getArrayFromRange('frame__chara__title', 0, $html)) {

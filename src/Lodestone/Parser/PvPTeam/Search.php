@@ -23,7 +23,7 @@ class Search extends ParserHelper
             $obj         = new PvPTeamSimple();
             $obj->ID     = trim(explode('/', $node->find('a', 0)->getAttribute('href'))[3]);
             $obj->Name   = trim($node->find('.entry__name')->plaintext);
-            $obj->Server = trim($node->find('.entry__world')->plaintext);
+            $obj->Server = explode(' ', trim($node->find('.entry__world')->plaintext))[0];
     
             $this->list->Results[] = $obj;
         }

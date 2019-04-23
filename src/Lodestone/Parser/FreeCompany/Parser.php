@@ -39,7 +39,7 @@ class Parser extends ParserHelper
             $box->find('.entry__freecompany__gc')->plaintext
         ))[0]);
         $this->fc->Name   = trim($box->find('.entry__freecompany__name')->plaintext);
-        $this->fc->Server = trim($box->find('.entry__freecompany__gc', 1)->plaintext);
+        $this->fc->Server = explode(' ', trim($box->find('.entry__freecompany__gc', 1)->plaintext))[0];
     }
 
     private function parseProfile(): void

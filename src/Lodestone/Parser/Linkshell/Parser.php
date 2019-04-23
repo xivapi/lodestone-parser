@@ -28,7 +28,7 @@ class Parser extends ParserHelper
             $obj         = new CharacterSimple();
             $obj->ID     = trim(explode('/', $node->find('a', 0)->getAttribute('href'))[3]);
             $obj->Name   = trim($node->find('.entry__name')->plaintext);
-            $obj->Server = trim($node->find('.entry__world')->plaintext);
+            $obj->Server = explode(' ', trim($node->find('.entry__world')->plaintext))[0];
             $obj->Avatar = explode('?', $node->find('.entry__chara__face img', 0)->src)[0];
 
             if ($rank = $node->find('.entry__chara_info__linkshell')->plaintext) {
