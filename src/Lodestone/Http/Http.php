@@ -8,7 +8,7 @@ use Symfony\Component\HttpClient\CurlHttpClient;
 
 class Http
 {
-    const BASE_URI = 'https://xivapi.com';
+    const BASE_URI = 'https://na.finalfantasyxiv.com/';
     const TIMEOUT  = 5;
 
     /**
@@ -75,7 +75,7 @@ class Http
         foreach ($client->stream($responses) as $response => $chunk) {
             if ($chunk->isLast()) {
                 // grab the user data
-                $userdata  = $response->getInfo('user_data');
+                $userdata = $response->getInfo('user_data');
 
                 // grab the parser class name
                 /** @var Parser $parser */

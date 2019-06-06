@@ -2,10 +2,7 @@
 
 namespace Lodestone\Api;
 
-use Lodestone\Http\Request;
-use Lodestone\Http\RequestConfig;
 use Lodestone\Parser\ParseCharacter;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Character extends ApiAbstract
 {
@@ -16,22 +13,9 @@ class Character extends ApiAbstract
 
     public function get(int $id)
     {
-        $request = new Request([
-            'method'   => 'GET',
-            'endpoint' => "/character/{$id}", # "lodestone/character/{$id}"
-            'query' => [
-                'Columns' => 'Character.Name,Character.Server'
-            ]
+        return $this->handle(ParseCharacter::class, [
+            'endpoint' => "/lodestone/character/{$id}",
         ]);
-
-        /** @var ResponseInterface $response */
-        $response = $this->http->request(ParseCharacter::class, $request);
-
-        if (RequestConfig::$isAsync) {
-            return null;
-        }
-
-        return $response;
     }
 
     public function friends(int $id)

@@ -21,8 +21,12 @@ class Request
     public function __construct(array $options)
     {
         // required
-        $this->method    = (string)$options['method'];
+        $this->method    = (string)$options['method'] ?? 'GET';
         $this->endpoint  = (string)$options['endpoint'];
+
+        if (empty($this->endpoint)) {
+            throw new \Exception("An endpoint is required when making a request object.");
+        }
 
         // optional
         $this->query     = $options['query'] ?? [];

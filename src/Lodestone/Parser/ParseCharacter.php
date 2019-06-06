@@ -6,8 +6,7 @@ class ParseCharacter implements Parser
 {
     public function handle(string $content)
     {
-        $content = json_decode($content);
-
+        $content = substr(trim($content), 0, 250);
 
         return $content;
     }

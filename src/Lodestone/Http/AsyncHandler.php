@@ -29,7 +29,7 @@ class AsyncHandler
     }
 
     /**
-     * Reset responses, this is done everytime ::get() is called
+     * Reset responses, this is done every time ::get() is called
      */
     public static function reset(): void
     {
