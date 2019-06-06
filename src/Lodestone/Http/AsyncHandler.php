@@ -11,11 +11,9 @@ class AsyncHandler
     /**
      * Add a response for concurrency
      */
-    public static function add(string $class, ResponseInterface $response)
+    public static function add(ResponseInterface $response)
     {
         self::$responses[] = $response;
-
-        return null;
     }
 
     /**

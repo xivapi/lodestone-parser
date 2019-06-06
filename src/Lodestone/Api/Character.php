@@ -2,9 +2,9 @@
 
 namespace Lodestone\Api;
 
-use Lodestone\Http\Http;
 use Lodestone\Http\Request;
 use Lodestone\Http\RequestConfig;
+use Lodestone\Parser\ParseCharacter;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Character extends ApiAbstract
@@ -25,7 +25,7 @@ class Character extends ApiAbstract
         ]);
 
         /** @var ResponseInterface $response */
-        $response = $this->http->request(__CLASS__, $request);
+        $response = $this->http->request(ParseCharacter::class, $request);
 
         if (RequestConfig::$isAsync) {
             return null;

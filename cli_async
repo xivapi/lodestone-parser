@@ -13,13 +13,17 @@ $api = new \Lodestone\Api();
 
 $start = microtime(true);
 
-// requests
-$responses = [
-    $api->character()->get(730968),
-    $api->character()->get(15609878),
-    $api->character()->get(2269193),
-    $api->character()->get(720399)
-];
+// use async mode
+$api->config()->useAsync();
+
+// perform multiple requests
+$api->character()->get(730968);
+$api->character()->get(15609878);
+$api->character()->get(2269193);
+$api->character()->get(720399);
+
+// settle responses (they will trigger in the order you added them)
+$responses = $api->http()->settle();
 
 $duration = microtime(true) - $start;
 
@@ -27,3 +31,4 @@ print_r([
     $responses,
     "Duration = {$duration}"
 ]);
+
