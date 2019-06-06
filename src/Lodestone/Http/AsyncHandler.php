@@ -1,0 +1,40 @@
+<?php
+
+namespace Lodestone\Http;
+
+use Symfony\Contracts\HttpClient\ResponseInterface;
+
+class AsyncHandler
+{
+    private static $responses = [];
+
+    /**
+     * Add a response for concurrency
+     */
+    public static function add(string $class, ResponseInterface $response)
+    {
+        self::$responses[] = $response;
+
+        return null;
+    }
+
+    /**
+     * Get all concurrent requests
+     */
+    public static function get(): array
+    {
+        $responses = self::$responses;
+
+        self::reset();
+
+        return $responses;
+    }
+
+    /**
+     * Reset responses, this is done everytime ::get() is called
+     */
+    public static function reset(): void
+    {
+        self::$responses = [];
+    }
+}

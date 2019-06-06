@@ -9,6 +9,32 @@
 // composer auto loader
 require __DIR__ . '/vendor/autoload.php';
 
+$api = new \Lodestone\Api();
+
+$start = microtime(true);
+
+// use async mode
+$api->config()->useAsync();
+
+// perform multiple requests
+$api->character()->get(730968);
+$api->character()->get(15609878);
+$api->character()->get(2269193);
+$api->character()->get(720399);
+
+// settle responses (they will trigger in the order you added them)
+$responses = $api->http()->settle();
+
+$duration = microtime(true) - $start;
+print_r([
+    "Duration = {$duration}"
+]);
+
+print_r($responses);
+
+
+
+/*
 define('LOGGER_ENABLED', true);
 
 // parse characters
@@ -41,3 +67,4 @@ $data = call_user_func_array([$api, $func], [$arg1, $arg2, $arg3]);
 print_r($data ? (method_exists($data, 'toArray') ? $data->toArray() : $data) : "\nNo data, was the command correct? > ". $func);
 print_r("\n");
 file_put_contents(__DIR__.'/test.json', json_encode($data->toArray(), JSON_PRETTY_PRINT));
+*/
