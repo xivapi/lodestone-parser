@@ -5,6 +5,8 @@ namespace Lodestone\Http;
 class Request
 {
     /** @var string */
+    public $baseUri;
+    /** @var string */
     public $method;
     /** @var string */
     public $endpoint;
@@ -14,6 +16,8 @@ class Request
     public $headers;
     /** @var array */
     public $json;
+    /** @var array */
+    public $userData;
 
     /**
      * Build a Lodestone Request
@@ -22,16 +26,14 @@ class Request
     {
         // required
         $this->method    = $options['method'] ?? 'GET';
-        $this->endpoint  = $options['endpoint'];
-
-        if (empty($this->endpoint)) {
-            throw new \Exception("An endpoint is required when making a request object.");
-        }
+        $this->endpoint  = $options['endpoint'] ?? '';
 
         // optional
+        $this->baseUri   = $options['base_uri'] ?? null;
         $this->query     = $options['query'] ?? [];
         $this->headers   = $options['headers'] ?? [];
         $this->json      = $options['json'] ?? [];
+        $this->userData  = $options['user_data'] ?? [];
 
         // hard-coded headers
         $this->headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36';

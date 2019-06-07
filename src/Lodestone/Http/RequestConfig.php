@@ -22,6 +22,11 @@ class RequestConfig
         RequestConfig::$isAsync = false;
     }
 
+    public function setRequestId($requestId)
+    {
+        AsyncHandler::$requestId = $requestId;
+    }
+
     /**
      * Reset the async handler
      */

@@ -14,10 +14,10 @@ class Http
     /**
      * Get Symfony Client
      */
-    private function getClient()
+    private function getClient(string $baseUri = null)
     {
         return new CurlHttpClient([
-            'base_uri' => self::BASE_URI,
+            'base_uri' => $baseUri ?: self::BASE_URI,
             'timeout'  => self::TIMEOUT
         ]);
     }
@@ -28,20 +28,20 @@ class Http
      */
     public function request(string $parser, Request $request)
     {
-        $requestId = Uuid::uuid4()->toString();
-
         // get client
-        $client = $this->getClient();
+        $client = $this->getClient($request->baseUri);
+
+        // set some custom user data
+        $request->userData['request_url'] = $request->baseUri . $request->endpoint;
+        $request->userData['request_id']  = AsyncHandler::$requestId ?: Uuid::uuid4()->toString();
+        $request->userData['parser']      = $parser;
 
         // perform request
         $response = $client->request($request->method, $request->endpoint, [
             'query'     => $request->query,
             'headers'   => $request->headers,
             'json'      => $request->json,
-            'user_data' => [
-                'request_id' => $requestId,
-                'parser'     => $parser
-            ]
+            'user_data' => $request->userData
         ]);
 
         // Asynchronous: Pop the response into the async handler, this returns the number
@@ -51,8 +51,13 @@ class Http
             return null;
         }
 
+        if ($response->getStatusCode() != 200) {
+            // todo - throw an exception based on the code
+            throw new \Exception("Not 200 code");
+        }
+
         /** @var Parser $parser */
-        $parser = new $parser();
+        $parser = new $parser($request->userData);
 
         // Synchronous: Get the content
         return $parser->handle($response->getContent());
@@ -77,12 +82,22 @@ class Http
                 // grab the user data
                 $userdata = $response->getInfo('user_data');
 
+                // grab request id
+                $requestId = $userdata['request_id'];
+
+                // if it wasn't a 200, return error
+                if ($response->getStatusCode() != 200) {
+                    // todo - handle exceptions
+                    $content[$requestId] = $response->getStatusCode();
+                    continue;
+                }
+
                 // grab the parser class name
                 /** @var Parser $parser */
-                $parser = new $userdata['parser']();
+                $parser = new $userdata['parser']($userdata);
 
                 // handle response
-                $content[] = $parser->handle(
+                $content[$requestId] = $parser->handle(
                     $response->getContent()
                 );
             }

@@ -6,6 +6,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class AsyncHandler
 {
+    /** @var string */
+    public static $requestId = null;
+    /** @var array */
     private static $responses = [];
 
     /**
@@ -34,5 +37,6 @@ class AsyncHandler
     public static function reset(): void
     {
         self::$responses = [];
+        self::$requestId = null;
     }
 }
