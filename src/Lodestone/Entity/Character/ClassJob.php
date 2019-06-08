@@ -6,10 +6,9 @@ use Lodestone\Entity\AbstractEntity;
 
 class ClassJob extends AbstractEntity
 {
+    public $Name;
     public $ClassID;
     public $JobID;
-    public $ClassName;
-    public $JobName;
     public $Level;
     public $ExpLevel;
     public $ExpLevelTogo;

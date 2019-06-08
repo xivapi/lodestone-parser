@@ -16,9 +16,9 @@ $start = microtime(true);
 // requests
 $responses = [
     $api->character()->get(730968),
-    $api->character()->get(15609878),
-    $api->character()->get(2269193),
-    $api->character()->get(720399)
+    #$api->character()->get(15609878),
+    #$api->character()->get(2269193),
+    #$api->character()->get(720399)
 ];
 
 $duration = microtime(true) - $start;
