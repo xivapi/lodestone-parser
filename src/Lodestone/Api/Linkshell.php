@@ -2,7 +2,8 @@
 
 namespace Lodestone\Api;
 
-use Lodestone\Parser\ParseCharacter;
+use Lodestone\Parser\ParseLinkshellMembers;
+use Lodestone\Parser\ParseLinkshellSearch;
 
 class Linkshell extends ApiAbstract
 {
@@ -10,7 +11,7 @@ class Linkshell extends ApiAbstract
     {
         $name = str_ireplace(self::STRING_FIXES[0], self::STRING_FIXES[1], $name);
 
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseLinkshellSearch::class, [
             'endpoint' => "/lodestone/linkshell",
             'query'    => [
                 'q'         => '"'. $name .'"',
@@ -22,7 +23,7 @@ class Linkshell extends ApiAbstract
 
     public function get(string $id, int $page = 1)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseLinkshellMembers::class, [
             'endpoint' => "/lodestone/linkshell/{$id}/member",
             'query'    => [
                 'page' => $page

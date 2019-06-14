@@ -7,7 +7,7 @@ use Rct567\DomQuery\DomQuery;
 class ParseAbstract
 {
     /** @var DomQuery */
-    protected $dom;
+    public $dom;
     
     public function setDom(string $html)
     {

@@ -2,7 +2,9 @@
 
 namespace Lodestone\Api;
 
-use Lodestone\Parser\ParseCharacter;
+use Lodestone\Parser\ParseFreeCompany;
+use Lodestone\Parser\ParseFreeCompanyMembers;
+use Lodestone\Parser\ParseFreeCompanySearch;
 
 class FreeCompany extends ApiAbstract
 {
@@ -10,7 +12,7 @@ class FreeCompany extends ApiAbstract
     {
         $name = str_ireplace(self::STRING_FIXES[0], self::STRING_FIXES[1], $name);
 
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseFreeCompanySearch::class, [
             'endpoint' => "/lodestone/freecompany",
             'query'    => [
                 'q'         => '"'. $name .'"',
@@ -22,14 +24,14 @@ class FreeCompany extends ApiAbstract
 
     public function get(string $id)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseFreeCompany::class, [
             'endpoint' => "/lodestone/freecompany/{$id}",
         ]);
     }
 
     public function members(string $id, int $page = 1)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseFreeCompanyMembers::class, [
             'endpoint' => "/lodestone/freecompany/{$id}/member",
             'query'    => [
                 'page' => $page

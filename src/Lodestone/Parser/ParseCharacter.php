@@ -17,6 +17,8 @@ use Rct567\DomQuery\DomQuery;
 
 class ParseCharacter extends ParseAbstract implements Parser
 {
+    use HelpersTrait;
+
     const TX_RACECLANGENDER = ['Race/Clan/Gender', 'Volk / Stamm / Geschlecht', 'Race / Ethnie / Sexe', '種族/部族/性別'];
     const TX_NAMEDAY        = ['Nameday', 'Guardian', 'Namenstag', 'Schutzgott', 'Date de naissance', 'Divinité', '誕生日', '守護神'];
     const TX_TOWN           = ['City-state', 'Stadtstaat', 'Cité de départ', '開始都市'];
@@ -298,7 +300,7 @@ class ParseCharacter extends ParseAbstract implements Parser
      * THIS HAS TO RUN AFTER GEAR AS IT NEEDS
      * TO LOOK FOR SOUL CRYSTAL EQUIPPED
      */
-    protected function parseActiveClass(): void
+    private function parseActiveClass(): void
     {
         // get main hand previously parsed
         $item = $this->profile->Gear['MainHand'];
@@ -421,7 +423,7 @@ class ParseCharacter extends ParseAbstract implements Parser
      */
     private function parseProfileFreeCompany($node)
     {
-        $this->profile->FreeCompanyId = trim(explode('/', $node->find("a")->getAttribute("href"))[3]);
+        $this->profile->FreeCompanyId = $this->getLodestoneId($node);
     }
     
     /**
@@ -429,6 +431,6 @@ class ParseCharacter extends ParseAbstract implements Parser
      */
     private function parseProfilePvPTeam($node)
     {
-        $this->profile->PvPTeamId = trim(explode('/', $node->find("a")->getAttribute("href"))[3]);
+        $this->profile->PvPTeamId = $this->getLodestoneId($node);
     }
 }

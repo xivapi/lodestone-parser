@@ -3,6 +3,10 @@
 namespace Lodestone\Api;
 
 use Lodestone\Parser\ParseCharacter;
+use Lodestone\Parser\ParseCharacterAchievements;
+use Lodestone\Parser\ParseCharacterFollowing;
+use Lodestone\Parser\ParseCharacterFriends;
+use Lodestone\Parser\ParseCharacterSearch;
 
 class Character extends ApiAbstract
 {
@@ -10,7 +14,7 @@ class Character extends ApiAbstract
     {
         $name = str_ireplace(self::STRING_FIXES[0], self::STRING_FIXES[1], $name);
 
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseCharacterSearch::class, [
             'endpoint' => "/lodestone/character",
             'query'    => [
                 'q'         => '"'. $name .'"',
@@ -29,7 +33,7 @@ class Character extends ApiAbstract
 
     public function friends(int $id, int $page = 1)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseCharacterFriends::class, [
             'endpoint' => "/lodestone/character/{$id}/friend",
             'query'    => [
                 'page' => $page
@@ -39,7 +43,7 @@ class Character extends ApiAbstract
 
     public function following(int $id, int $page = 1)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseCharacterFollowing::class, [
             'endpoint' => "/lodestone/character/{$id}/following",
             'query'    => [
                 'page' => $page
@@ -49,7 +53,7 @@ class Character extends ApiAbstract
 
     public function achievements(int $id, int $kindId = 1)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParseCharacterAchievements::class, [
             'endpoint' => "/lodestone/character/{$id}/achievement/kind/{$kindId}/",
         ]);
     }

@@ -2,7 +2,8 @@
 
 namespace Lodestone\Api;
 
-use Lodestone\Parser\ParseCharacter;
+use Lodestone\Parser\ParsePvPTeamMembers;
+use Lodestone\Parser\ParsePvPTeamSearch;
 
 class PvPTeam extends ApiAbstract
 {
@@ -10,7 +11,7 @@ class PvPTeam extends ApiAbstract
     {
         $name = str_ireplace(self::STRING_FIXES[0], self::STRING_FIXES[1], $name);
 
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParsePvPTeamSearch::class, [
             'endpoint' => "/lodestone/pvpteam",
             'query'    => [
                 'q'         => '"'. $name .'"',
@@ -22,7 +23,7 @@ class PvPTeam extends ApiAbstract
 
     public function get(string $id)
     {
-        return $this->handle(ParseCharacter::class, [
+        return $this->handle(ParsePvPTeamMembers::class, [
             'endpoint' => "/lodestone/pvpteam/{$id}/member",
         ]);
     }
