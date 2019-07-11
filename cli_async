@@ -16,14 +16,25 @@ $start = microtime(true);
 // use async mode
 $api->config()->useAsync();
 
-// perform multiple requests
-$api->character()->get(730968);
-$api->character()->get(15609878);
-$api->character()->get(2269193);
-$api->character()->get(720399);
+$responses = [];
+foreach(range(0,5) as $i) {
+    echo "Loop: {$i} \n";
+    // perform multiple requests
+    $api->character()->get(730968);
+    $api->character()->get(15609878);
+    $api->character()->get(2269193);
+    $api->character()->get(720399);
+    $api->character()->get(14673089);
+    $api->character()->get(24328626);
+    $api->character()->get(24778921);
+    $api->character()->get(6649088);
+    $api->character()->get(1567731);
+    $api->character()->get(11887821);
 
-// settle responses (they will trigger in the order you added them)
-$responses = $api->http()->settle();
+    // settle responses (they will trigger in the order you added them)
+    $responses = array_merge($responses, $api->http()->settle());
+    sleep(1);
+}
 
 $duration = microtime(true) - $start;
 
