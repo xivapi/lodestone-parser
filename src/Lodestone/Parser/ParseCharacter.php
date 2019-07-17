@@ -227,7 +227,7 @@ class ParseCharacter extends ParseAbstract implements Parser
     
             // if item is a ring, check if its ring 1 or 2
             if ($slot == 'Ring') {
-                $slot = isset($this->profile->Gear['Ring1']) ? 'Ring2' : 'Ring1';
+                $slot = isset($this->profile->GearSet['Gear']['Ring1']) ? 'Ring2' : 'Ring1';
             }
     
             // save slot
@@ -303,7 +303,7 @@ class ParseCharacter extends ParseAbstract implements Parser
     private function parseActiveClass(): void
     {
         // get main hand previously parsed
-        $item = $this->profile->Gear['MainHand'];
+        $item = $this->profile->GearSet['Gear']['MainHand'];
         $name = explode("'", $item->Category)[0];
         
         // get class job id from the main-hand category name
