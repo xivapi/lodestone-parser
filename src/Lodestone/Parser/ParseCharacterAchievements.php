@@ -20,16 +20,16 @@ class ParseCharacterAchievements extends ParseAbstract implements Parser
         $this->setDom($html);
         $achievements = new Achievements();
 
-        /** @var DomQuery $li */
-        foreach ($this->dom->find('li') as $li) {
-            if ($li->hasClass('entry__achievement--complete')) {
+        /** @var DomQuery $a */
+        foreach ($this->dom->find('.ldst__achievement .entry .entry__achievement') as $a) {
+            if ($a->hasClass('entry__achievement--complete')) {
                 $obj         = new Achievement();
-                $obj->ID     = explode('/', $li->attr('href'))[6];
-                $obj->Name   = $li->find('.entry__activity__txt')->text();
-                $obj->Icon   = $li->find('.entry__achievement__frame img')->attr('src');
-                $obj->Points = (int)$li->find('.entry__achievement__number')->text();
+                $obj->ID     = explode('/', $a->attr('href'))[6];
+                $obj->Name   = $a->find('.entry__activity__txt')->text();
+                $obj->Icon   = $a->find('.entry__achievement__frame img')->attr('src');
+                $obj->Points = (int)$a->find('.entry__achievement__number')->text();
 
-                $this->handledObtainedState($obj, $li->find('.entry__activity__time'));
+                $this->handledObtainedState($obj, $a->find('.entry__activity__time'));
 
                 $achievements->Achievements[] = $obj;
             }
@@ -41,16 +41,17 @@ class ParseCharacterAchievements extends ParseAbstract implements Parser
     /**
      * Handle parsing the obtained timestamp
      */
-    private function handledObtainedState(Achievement $obj, $timestamp): void
+    private function handledObtainedState(Achievement $obj, $ts): void
     {
-        if ($timestamp) {
-            $timestamp = $timestamp->plaintext;
-            $timestamp = trim(explode('(', $timestamp)[2]);
-            $timestamp = trim(explode(',', $timestamp)[0]);
-            $timestamp = $timestamp ? (new \DateTime('@' . $timestamp))->format('U') : null;
+        /** @var DomQuery $ts */
+        if ($ts) {
+            $ts = trim($ts->html());
+            $ts = trim(explode('(', $ts)[2]);
+            $ts = trim(explode(',', $ts)[0]);
+            $ts = $ts ? (new \DateTime('@' . $ts))->format('U') : null;
 
-            if ($timestamp) {
-                $obj->ObtainedTimestamp = $timestamp;
+            if ($ts) {
+                $obj->ObtainedTimestamp = $ts;
             }
         }
     }

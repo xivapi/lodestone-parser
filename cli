@@ -11,19 +11,6 @@ require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
 
-$start = microtime(true);
-
-// requests
-$responses = [
-    $api->character()->get(730968),
-    #$api->character()->get(15609878),
-    #$api->character()->get(2269193),
-    #$api->character()->get(720399)
-];
-
-$duration = microtime(true) - $start;
-
-print_r([
-    $responses,
-    "Duration = {$duration}"
-]);
+print_r(
+    $api->character()->achievements(730968)
+);
