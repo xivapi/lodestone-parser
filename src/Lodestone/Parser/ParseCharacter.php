@@ -354,6 +354,8 @@ class ParseCharacter extends ParseAbstract implements Parser
         if ($bio = strip_tags($bio)) {
             $this->profile->Bio = $bio;
         }
+    
+        $this->profile->Bio = mb_convert_encoding($this->profile->Bio, 'UTF-8', 'UTF-8');
     }
     
     /**
