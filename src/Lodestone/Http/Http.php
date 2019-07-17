@@ -102,8 +102,10 @@ class Http
 
                 // if it wasn't a 200, return error
                 if ($response->getStatusCode() != 200) {
-                    // todo - handle exceptions
-                    $content[$requestId] = $response->getStatusCode();
+                    $content[$requestId] = [
+                        'Error' => true,
+                        'StatusCode' => $response->getStatusCode()
+                    ];
                     continue;
                 }
 
