@@ -18,17 +18,10 @@ class ParseCharacterAchievements extends ParseAbstract implements Parser
     {
         // set dom
         $this->setDom($html);
-
-        $listNodes = $this->dom->find('.ldst__achievement li');
-
-        if (empty($listNodes->html())) {
-            throw new LodestonePrivateException();
-        }
-
         $achievements = new Achievements();
 
         /** @var DomQuery $li */
-        foreach ($listNodes as $li) {
+        foreach ($this->dom->find('li') as $li) {
             if ($li->hasClass('entry__achievement--complete')) {
                 $obj         = new Achievement();
                 $obj->ID     = explode('/', $li->attr('href'))[6];
