@@ -140,8 +140,8 @@ class ParseCharacter extends ParseAbstract implements Parser
             $attr        = new Attribute();
             $attr->Name  = $tr->find('th')->text();
             $attr->Value = $tr->find('td')->text();
-    
-            $this->profile->Attributes[] = $attr;
+
+            $this->profile->GearSet['Attributes'] = $attr;
         }
         
         //
@@ -152,8 +152,8 @@ class ParseCharacter extends ParseAbstract implements Parser
             $attr        = new Attribute();
             $attr->Name  = $li->find('p')->text();
             $attr->Value = $li->find('span')->text();
-    
-            $this->profile->Attributes[] = $attr;
+
+            $this->profile->GearSet['Attributes'] = $attr;
         }
     }
     
@@ -290,7 +290,7 @@ class ParseCharacter extends ParseAbstract implements Parser
                 }
             }
             
-            $this->profile->Gear[$slot] = $item;
+            $this->profile->GearSet['Gear'][$slot] = $item;
         }
     }
     
