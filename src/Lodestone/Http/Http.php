@@ -2,6 +2,10 @@
 
 namespace Lodestone\Http;
 
+use Lodestone\Exceptions\LodestoneException;
+use Lodestone\Exceptions\LodestoneMaintenanceException;
+use Lodestone\Exceptions\LodestoneNotFoundException;
+use Lodestone\Exceptions\LodestonePrivateException;
 use Lodestone\Parser\Parser;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpClient\CurlHttpClient;
@@ -51,9 +55,20 @@ class Http
             return null;
         }
 
+        if ($response->getStatusCode() == 503) {
+            throw new LodestoneMaintenanceException();
+        }
+
+        if ($response->getStatusCode() == 404) {
+            throw new LodestoneNotFoundException();
+        }
+
+        if ($response->getStatusCode() == 403) {
+            throw new LodestonePrivateException();
+        }
+
         if ($response->getStatusCode() != 200) {
-            // todo - throw an exception based on the code
-            throw new \Exception("Not 200 code");
+            throw new LodestoneException();
         }
 
         /** @var Parser $parser */

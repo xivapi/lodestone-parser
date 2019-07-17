@@ -4,13 +4,16 @@ namespace Lodestone\Parser;
 
 use Lodestone\Entity\Character\Achievement;
 use Lodestone\Entity\Character\Achievements;
-use Lodestone\Exceptions\AchievementsPrivateException;
+use Lodestone\Exceptions\LodestonePrivateException;
 use Rct567\DomQuery\DomQuery;
 
 class ParseCharacterAchievements extends ParseAbstract implements Parser
 {
     use HelpersTrait;
 
+    /**
+     * @throws LodestonePrivateException
+     */
     public function handle(string $html)
     {
         // set dom
@@ -19,7 +22,7 @@ class ParseCharacterAchievements extends ParseAbstract implements Parser
         $listNodes = $this->dom->find('.ldst__achievement li');
 
         if (empty($listNodes->html())) {
-            throw new AchievementsPrivateException();
+            throw new LodestonePrivateException();
         }
 
         $achievements = new Achievements();

@@ -2,7 +2,7 @@
 
 namespace Lodestone\Exceptions;
 
-class ForbiddenException extends \Exception
+class LodestoneException extends \Exception
 {
 
 }
