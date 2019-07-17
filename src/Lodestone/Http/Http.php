@@ -13,7 +13,7 @@ use Symfony\Component\HttpClient\CurlHttpClient;
 class Http
 {
     const BASE_URI = 'https://na.finalfantasyxiv.com/';
-    const TIMEOUT  = 5;
+    const TIMEOUT  = 30;
 
     /**
      * Get Symfony Client
