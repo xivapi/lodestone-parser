@@ -102,7 +102,7 @@ class Http
 
                 // if it wasn't a 200, return error
                 if ($response->getStatusCode() != 200) {
-                    $content[$requestId] = [
+                    $content[$requestId] = (Object)[
                         'Error' => true,
                         'StatusCode' => $response->getStatusCode()
                     ];
