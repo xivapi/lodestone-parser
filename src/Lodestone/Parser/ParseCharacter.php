@@ -141,7 +141,7 @@ class ParseCharacter extends ParseAbstract implements Parser
             $attr->Name  = $tr->find('th')->text();
             $attr->Value = $tr->find('td')->text();
 
-            $this->profile->GearSet['Attributes'] = $attr;
+            $this->profile->GearSet['Attributes'][] = $attr;
         }
         
         //
@@ -153,7 +153,7 @@ class ParseCharacter extends ParseAbstract implements Parser
             $attr->Name  = $li->find('p')->text();
             $attr->Value = $li->find('span')->text();
 
-            $this->profile->GearSet['Attributes'] = $attr;
+            $this->profile->GearSet['Attributes'][] = $attr;
         }
     }
     
