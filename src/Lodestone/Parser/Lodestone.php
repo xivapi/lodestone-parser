@@ -236,15 +236,15 @@ class Lodestone extends ParserHelper
      */
     public function parseWorldStatus()
     {
-        $this->initialize();
+        $this->initializeWorldStatus();
         
-        $entries = $this->getDocumentFromClassname('.parts__space--pb16')->find('div.item-list__worldstatus');
+        $entries = $this->getDocumentFromClassname('.world-dcgroup')->find('div.world-list__item');
         $results = [];
         
         foreach($entries as $entry) {
             $results[] = [
-                'Title'  => trim($entry->find('h3')->plaintext),
-                'Status' => trim($entry->find('p')->plaintext),
+                'Title'  => trim($entry->find('.world-list__world_name')->find('p')->plaintext),
+                'Status' => trim($entry->find('.world-list__world_category')->find('p')->plaintext),
             ];
         }
         

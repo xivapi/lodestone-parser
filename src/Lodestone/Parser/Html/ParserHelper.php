@@ -73,6 +73,21 @@ class ParserHelper
         $this->htmlOriginal = $this->html;
         $this->setDocument($this->html);
     }
+
+    /**
+     * Default setup that world status page will use.
+     */
+    protected function initializeWorldStatus()
+    {
+        // setup html
+        $this->ensureHtml();
+        $this->html = $this->trim($this->html, 'class="ldst__bg"', 'class="link_sp-site"');
+
+        // ensure that there is something left after trimming
+        $this->ensureHtml();
+        $this->htmlOriginal = $this->html;
+        $this->setDocument($this->html);
+    }
     
     /**
      * Default setup that database pages use.
