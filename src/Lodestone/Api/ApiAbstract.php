@@ -10,8 +10,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class ApiAbstract
 {
     const STRING_FIXES = [
-        ['’'],
-        ["'"],
+        ['+', '’'],
+        [' ', "'"],
     ];
 
     protected $http;
