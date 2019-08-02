@@ -56,19 +56,31 @@ class Http
         }
 
         if ($response->getStatusCode() == 503) {
-            throw new LodestoneMaintenanceException();
+            throw new LodestoneMaintenanceException(
+                'Lodestone is currently down for maintenance.',
+                $response->getStatusCode()
+            );
         }
 
         if ($response->getStatusCode() == 404) {
-            throw new LodestoneNotFoundException();
+            throw new LodestoneNotFoundException(
+                'Could not find: '. $request->userData['request_url'],
+                $response->getStatusCode()
+            );
         }
 
         if ($response->getStatusCode() == 403) {
-            throw new LodestonePrivateException();
+            throw new LodestonePrivateException(
+                'This page is private: '. $request->userData['request_url'],
+                $response->getStatusCode()
+            );
         }
 
         if ($response->getStatusCode() != 200) {
-            throw new LodestoneException();
+            throw new LodestoneException(
+                'Unknown exception status code ('. $response->getStatusCode() .') for: '. $request->userData['request_url'],
+                $response->getStatusCode()
+            );
         }
 
         /** @var Parser $parser */
