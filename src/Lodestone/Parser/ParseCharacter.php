@@ -346,8 +346,7 @@ class ParseCharacter extends ParseAbstract implements Parser
      */
     private function parseProfileBio()
     {
-        $bio = $this->dom->find('.character__selfintroduction')->html();
-        $bio = trim($bio[0]);
+        $bio = $this->dom->find('.character__selfintroduction')->text();
         $bio = html_entity_decode($bio, ENT_QUOTES, "UTF-8");
         $bio = str_ireplace('Character Profile', null, $bio);
         
