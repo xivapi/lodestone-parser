@@ -3,6 +3,7 @@
 namespace Lodestone\Api;
 
 use Lodestone\Parser\ParseLodestoneBanners;
+use Lodestone\Parser\ParseLodestoneWorldStatus;
 
 class Lodestone extends ApiAbstract
 {
@@ -15,53 +16,43 @@ class Lodestone extends ApiAbstract
 
     public function news()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/news",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function topics()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/topics",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function notices()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/news/category/1",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function maintenance()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/news/category/2",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function maintenanceTimes()
     {
-
+        throw new \Exception("Not Implemented");
     }
 
     public function updates()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/news/category/3",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function status()
     {
-        return $this->handle(ParseLodestoneBanners::class, [
-            'endpoint' => "/lodestone/news/category/4",
-        ]);
+        throw new \Exception("Not Implemented");
     }
 
     public function worldstatus()
     {
-
+        return $this->handle(ParseLodestoneWorldStatus::class, [
+            'endpoint' => "/lodestone/worldstatus",
+        ]);
     }
 }
