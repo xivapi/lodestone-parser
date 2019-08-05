@@ -330,9 +330,12 @@ class ParseCharacter extends ParseAbstract implements Parser
         $this->profile->Name = trim($name);
         
         // server
-        $server = $this->dom->find('.frame__chara__world')->eq(0)->html();
-        $server = trim(explode('&nbsp;', strip_tags($server))[0]);
+        [$server, $dc] = $this->getServerAndDc(
+            $this->dom->find('.frame__chara__world')->eq(0)->text()
+        );
+    
         $this->profile->Server = $server;
+        $this->profile->DC = $dc;
         
         // title
         if ($title = $this->dom->find('.frame__chara__title')) {

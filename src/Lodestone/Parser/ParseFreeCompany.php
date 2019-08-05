@@ -24,13 +24,14 @@ class ParseFreeCompany extends ParseAbstract implements Parser
             $fc->Crest[] = str_ireplace('64x64', '128x128', $img->attr('src'));
         }
         
-        // this has a very special space, its not a " " normal space its a " " space, whatever the fuck that is
-        $server = trim($this->dom->find('.entry__freecompany__gc')->eq(1)->text());
-        $server = trim(explode(" ", $server)[0]);
+        [$server, $dc] = $this->getServerAndDc(
+            $this->dom->find('.entry__freecompany__gc')->eq(1)->text()
+        );
 
         $fc->GrandCompany       = trim(explode('<', trim($this->dom->find('.entry__freecompany__gc')->text()))[0]);
         $fc->Name               = $this->dom->find('.entry__freecompany__name')->text();
         $fc->Server             = $server;
+        $fc->DC                 = $dc;
 
         // all use: freecompany__text
         $fc->Active             = $this->dom->find('.freecompany__text')->eq(0)->text();

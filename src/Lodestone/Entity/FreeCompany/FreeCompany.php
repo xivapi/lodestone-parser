@@ -11,6 +11,7 @@ class FreeCompany extends AbstractEntity
     public $GrandCompany;
     public $Name;
     public $Server;
+    public $DC;
     public $Tag;
     public $Formed;
     public $ActiveMemberCount;

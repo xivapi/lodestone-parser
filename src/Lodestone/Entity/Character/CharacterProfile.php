@@ -9,6 +9,7 @@ class CharacterProfile extends AbstractEntity
     public $ID;
     public $Name;
     public $Server;
+    public $DC;
     public $Title;
     public $TitleTop;
     public $Avatar;
