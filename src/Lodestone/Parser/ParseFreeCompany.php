@@ -26,7 +26,7 @@ class ParseFreeCompany extends ParseAbstract implements Parser
 
         $fc->GrandCompany       = trim(explode('<', trim($this->dom->find('.entry__freecompany__gc')->text()))[0]);
         $fc->Name               = $this->dom->find('.entry__freecompany__name')->text();
-        $fc->Server             = trim(explode('&nbsp;', $this->dom->find('.entry__freecompany__gc')->eq(1)->text())[0]);
+        $fc->Server             = trim(explode(' ', html_entity_decode($this->dom->find('.entry__freecompany__gc')->eq(1)->text()))[0]);
 
         // all use: freecompany__text
         $fc->Active             = $this->dom->find('.freecompany__text')->eq(0)->text();
