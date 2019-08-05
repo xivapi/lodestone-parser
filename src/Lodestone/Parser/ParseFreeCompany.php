@@ -23,10 +23,14 @@ class ParseFreeCompany extends ParseAbstract implements Parser
         foreach ($this->dom->find('.entry__freecompany__crest__image img') as $img) {
             $fc->Crest[] = str_ireplace('64x64', '128x128', $img->attr('src'));
         }
+        
+        // this has a very special space, its not a " " normal space its a " " space, whatever the fuck that is
+        $server = trim($this->dom->find('.entry__freecompany__gc')->eq(1)->text());
+        $server = trim(explode(" ", $server)[0]);
 
         $fc->GrandCompany       = trim(explode('<', trim($this->dom->find('.entry__freecompany__gc')->text()))[0]);
         $fc->Name               = $this->dom->find('.entry__freecompany__name')->text();
-        $fc->Server             = trim(explode(' ', html_entity_decode($this->dom->find('.entry__freecompany__gc')->eq(1)->text()))[0]);
+        $fc->Server             = $server;
 
         // all use: freecompany__text
         $fc->Active             = $this->dom->find('.freecompany__text')->eq(0)->text();
