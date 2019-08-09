@@ -24,7 +24,7 @@ class PvPTeam extends ApiAbstract
     public function get(string $id)
     {
         return $this->handle(ParsePvPTeamMembers::class, [
-            'endpoint' => "/lodestone/pvpteam/{$id}/member",
+            'endpoint' => "/lodestone/pvpteam/{$id}",
         ]);
     }
 }
