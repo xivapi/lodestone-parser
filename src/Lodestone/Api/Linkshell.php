@@ -24,7 +24,7 @@ class Linkshell extends ApiAbstract
     public function get(string $id, int $page = 1)
     {
         return $this->handle(ParseLinkshellMembers::class, [
-            'endpoint' => "/lodestone/linkshell/{$id}/member",
+            'endpoint' => "/lodestone/linkshell/{$id}",
             'query'    => [
                 'page' => $page
             ]
