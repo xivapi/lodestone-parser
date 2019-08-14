@@ -35,7 +35,7 @@ class ParseFreeCompany extends ParseAbstract implements Parser
 
         // all use: freecompany__text
         $fc->Active             = trim($this->dom->find('.freecompany__text')->eq(5)->text());
-        $fc->Recruitment        = trim($this->dom->find('.freecompany__text')->eq(1)->text());
+        $fc->Recruitment        = trim($this->dom->find('.freecompany__recruitment')->text());
         $fc->Formed             = $this->getTimestamp($this->dom->find('.freecompany__text')->eq(2));
         $fc->ActiveMemberCount  = filter_var($this->dom->find('.freecompany__text')->eq(3)->text(), FILTER_SANITIZE_NUMBER_INT);
         $fc->Rank               = filter_var($this->dom->find('.freecompany__text')->eq(4)->text(), FILTER_SANITIZE_NUMBER_INT);
