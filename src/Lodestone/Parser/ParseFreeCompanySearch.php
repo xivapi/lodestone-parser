@@ -25,7 +25,7 @@ class ParseFreeCompanySearch extends ParseAbstract implements Parser
             $obj         = new FreeCompanySimple();
             $obj->ID     = $this->getLodestoneId($node);
             $obj->Name   = $node->find('.entry__name')->text();
-            $obj->Server = trim(explode(' ', $node->find('.entry__world')->text())[0]);
+            $obj->Server = trim(explode(' ', $node->find('.entry__world')->text())[1]);
 
             /** @var DomQuery $img */
             foreach($node->find('.entry__freecompany__crest__image img') as $img) {
