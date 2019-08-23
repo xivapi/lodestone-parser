@@ -6,6 +6,8 @@ use Lodestone\Parser\ParseCharacter;
 use Lodestone\Parser\ParseCharacterAchievements;
 use Lodestone\Parser\ParseCharacterFollowing;
 use Lodestone\Parser\ParseCharacterFriends;
+use Lodestone\Parser\ParseCharacterMinions;
+use Lodestone\Parser\ParseCharacterMounts;
 use Lodestone\Parser\ParseCharacterSearch;
 
 class Character extends ApiAbstract
@@ -38,6 +40,22 @@ class Character extends ApiAbstract
             'query'    => [
                 'page' => $page
             ]
+        ]);
+    }
+
+    public function minions(int $id)
+    {
+        return $this->handle(ParseCharacterMinions::class, [
+            'endpoint' => "/lodestone/character/{$id}/minion",
+            'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
+        ]);
+    }
+
+    public function mounts(int $id)
+    {
+        return $this->handle(ParseCharacterMounts::class, [
+            'endpoint' => "/lodestone/character/{$id}/mount",
+            'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
         ]);
     }
 

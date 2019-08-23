@@ -9,9 +9,9 @@ class ParseAbstract
     /** @var DomQuery */
     public $dom;
     
-    public function setDom(string $html)
+    public function setDom(string $html, bool $mobile = false)
     {
         $dom = new DomQuery($html);
-        $this->dom = $dom->find('.ldst__contents');
+        $this->dom = $dom->find($mobile?'.ldst_main_content':'.ldst__contents');
     }
 }

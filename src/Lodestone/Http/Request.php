@@ -36,7 +36,7 @@ class Request
         $this->userData  = $options['user_data'] ?? [];
 
         // hard-coded headers
-        $this->headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36';
+        $this->headers['User-Agent'] = $options['user-agent'] ?? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36';
         $this->headers['Content-type'] = 'text/html';
         $this->headers['Accept-Language'] = 'en';
         $this->headers['charset'] = 'utf-8';

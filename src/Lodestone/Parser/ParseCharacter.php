@@ -42,7 +42,6 @@ class ParseCharacter extends ParseAbstract implements Parser
         $this->parseProfile();
         $this->parseClassJobs();
         $this->parseAttributes();
-        $this->parseMinionsAndMounts();
         $this->parseEquipGear();
         $this->parseActiveClass();
 
@@ -154,28 +153,6 @@ class ParseCharacter extends ParseAbstract implements Parser
             $attr->Value = $li->find('span')->text();
 
             $this->profile->GearSet['Attributes'][] = $attr;
-        }
-    }
-    
-    /**
-     * Parse minions and mounts tab
-     */
-    private function parseMinionsAndMounts()
-    {
-        /** @var DomQuery $li */
-        foreach ($this->dom->find('.character__mounts li') as $li) {
-            $mount = new Mount();
-            $mount->Name = $li->find('.character__item_icon')->attr('data-tooltip');
-            $mount->Icon = $li->find('img')->attr('src');
-            $this->profile->Mounts[] = $mount;
-        }
-    
-        /** @var DomQuery $li */
-        foreach ($this->dom->find('.character__minion li') as $li) {
-            $minion = new Minion();
-            $minion->Name = $li->find('.character__item_icon')->attr('data-tooltip');
-            $minion->Icon = $li->find('img')->attr('src');
-            $this->profile->Minions[] = $minion;
         }
     }
     
