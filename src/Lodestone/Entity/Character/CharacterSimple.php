@@ -8,6 +8,7 @@ class CharacterSimple extends AbstractEntity
 {
     public $ID;
     public $Name;
+    public $Lang;
     public $Server;
     public $Avatar;
     public $Rank;
