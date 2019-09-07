@@ -43,6 +43,7 @@ trait ListTrait
             $obj         = new CharacterSimple();
             $obj->ID     = $this->getLodestoneId($node);
             $obj->Name   = $node->find('.entry__name')->text();
+            $obj->Lang   = trim($node->find('.entry__chara__lang')->text());
             $obj->Server = trim(explode(' ', $node->find('.entry__world')->text())[0]);
             $obj->Avatar = $node->find('.entry__chara__face img')->attr('src');
 
