@@ -30,6 +30,7 @@ class CharacterProfile extends AbstractEntity
     public $Minions = [];
     public $Mounts = [];
     public $ParseDate;
+    public $Lang;
 
     public function __construct()
     {
