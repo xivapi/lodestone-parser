@@ -19,7 +19,7 @@ class Character extends ApiAbstract
         return $this->handle(ParseCharacterSearch::class, [
             'endpoint' => "/lodestone/character",
             'query'    => [
-                'q'         => '"'. $name .'"',
+                'q'         => '"' . $name . '"',
                 'worldname' => $server,
                 'page'      => $page
             ]
@@ -45,18 +45,26 @@ class Character extends ApiAbstract
 
     public function minions(int $id)
     {
-        return $this->handle(ParseCharacterMinions::class, [
-            'endpoint' => "/lodestone/character/{$id}/minion",
-            'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
-        ]);
+        try {
+            return $this->handle(ParseCharacterMinions::class, [
+                'endpoint'   => "/lodestone/character/{$id}/minion",
+                'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
+            ]);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     public function mounts(int $id)
     {
-        return $this->handle(ParseCharacterMounts::class, [
-            'endpoint' => "/lodestone/character/{$id}/mount",
-            'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
-        ]);
+        try {
+            return $this->handle(ParseCharacterMounts::class, [
+                'endpoint'   => "/lodestone/character/{$id}/mount",
+                'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
+            ]);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     public function following(int $id, int $page = 1)
