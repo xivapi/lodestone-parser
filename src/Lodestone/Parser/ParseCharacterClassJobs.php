@@ -26,10 +26,14 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
         foreach ($this->dom->find('.character__job li') as $li)
         {
             // class name
-            $name = trim($li->find('.character__job__name')->text());
+            $name   = trim($li->find('.character__job__name')->text());
+            $master = trim($li->find('.character__job__name--meister')->text());
+            $name   = str_ireplace('(Limited Job)', null, $name);
+            $name   = $name ?: $master;
 
-            // remove this shit
-            $name = str_ireplace('(Limited Job)', null, $name);
+            if (empty($name)) {
+                continue;
+            }
 
             // get game data ids
             $gd = ClassJobs::findGameData($name);
