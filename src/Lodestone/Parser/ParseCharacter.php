@@ -4,15 +4,11 @@ namespace Lodestone\Parser;
 
 use Lodestone\Entity\Character\Attribute;
 use Lodestone\Entity\Character\CharacterProfile;
-use Lodestone\Entity\Character\ClassJob;
 use Lodestone\Entity\Character\GrandCompany;
 use Lodestone\Entity\Character\Guardian;
 use Lodestone\Entity\Character\Item;
 use Lodestone\Entity\Character\ItemSimple;
-use Lodestone\Entity\Character\Minion;
-use Lodestone\Entity\Character\Mount;
 use Lodestone\Entity\Character\Town;
-use Lodestone\Game\ClassJobs;
 use Rct567\DomQuery\DomQuery;
 
 class ParseCharacter extends ParseAbstract implements Parser
@@ -40,10 +36,8 @@ class ParseCharacter extends ParseAbstract implements Parser
         
         // parse main profile
         $this->parseProfile();
-        $this->parseClassJobs();
         $this->parseAttributes();
         $this->parseEquipGear();
-        $this->parseActiveClass();
 
         return $this->profile;
     }
@@ -78,51 +72,6 @@ class ParseCharacter extends ParseAbstract implements Parser
     
         $this->parseProfileBasic();
         $this->parseProfileBio();
-    }
-    
-    /**
-     * Parse the "Class/Jobs" tab
-     */
-    private function parseClassJobs()
-    {
-        // loop through roles
-        /** @var DomQuery $li */
-        foreach ($this->dom->find('.character__job li') as $li)
-        {
-            // class name
-            $name = trim($li->find('.character__job__name')->text());
-        
-            // get game data ids
-            $gd = ClassJobs::findGameData($name);
-            
-            // build role
-            $role          = new ClassJob();
-            $role->Name    = $gd->Name;
-            $role->ClassID = $gd->ClassID;
-            $role->JobID   = $gd->JobID;
-        
-            // level
-            $level = trim($li->find('.character__job__level')->text());
-            $level = ($level == '--') ? 0 : intval($level);
-            $role->Level = $level;
-        
-            //specialist
-            $role->IsSpecialised = !empty($li->find('.character__job__name--meister')->text());
-        
-            // current exp
-            [$current, $max] = explode('/', $li->find('.character__job__exp')->text());
-            $current = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
-            $max     = filter_var(trim(str_ireplace('-', null, $max)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
-        
-            $role->ExpLevel     = $current;
-            $role->ExpLevelMax  = $max;
-            $role->ExpLevelTogo = $max - $current;
-        
-            $this->profile->ClassJobs[] = $role;
-        }
-    
-        unset($box);
-        unset($node);
     }
     
     /**
@@ -268,30 +217,6 @@ class ParseCharacter extends ParseAbstract implements Parser
             }
             
             $this->profile->GearSet['Gear'][$slot] = $item;
-        }
-    }
-    
-    /**
-     * Get the characters active class/job
-     *
-     * THIS HAS TO RUN AFTER GEAR AS IT NEEDS
-     * TO LOOK FOR SOUL CRYSTAL EQUIPPED
-     */
-    private function parseActiveClass(): void
-    {
-        // get main hand previously parsed
-        $item = $this->profile->GearSet['Gear']['MainHand'];
-        $name = explode("'", $item->Category)[0];
-        
-        // get class job id from the main-hand category name
-        $gd = ClassJobs::findGameData($name);
-        
-        /** @var ClassJob $cj */
-        foreach ($this->profile->ClassJobs as $cj) {
-            if ($cj->JobID === $gd->JobID) {
-                $this->profile->ActiveClassJob = clone $cj;
-                break;
-            }
         }
     }
     

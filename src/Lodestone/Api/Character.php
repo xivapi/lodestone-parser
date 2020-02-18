@@ -4,6 +4,7 @@ namespace Lodestone\Api;
 
 use Lodestone\Parser\ParseCharacter;
 use Lodestone\Parser\ParseCharacterAchievements;
+use Lodestone\Parser\ParseCharacterClassJobs;
 use Lodestone\Parser\ParseCharacterFollowing;
 use Lodestone\Parser\ParseCharacterFriends;
 use Lodestone\Parser\ParseCharacterMinions;
@@ -55,6 +56,14 @@ class Character extends ApiAbstract
     {
         return $this->handle(ParseCharacterMounts::class, [
             'endpoint' => "/lodestone/character/{$id}/mount",
+            'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
+        ]);
+    }
+
+    public function classjobs(int $id)
+    {
+        return $this->handle(ParseCharacterClassJobs::class, [
+            'endpoint' => "/lodestone/character/{$id}/class_job",
             'user-agent' => 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
         ]);
     }

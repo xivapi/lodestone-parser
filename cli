@@ -12,5 +12,5 @@ require __DIR__ . '/vendor/autoload.php';
 $api = new \Lodestone\Api();
 
 print_r(
-    $api->freecompany()->get('9232379236109629819')
+    $api->character()->classjobs('730968')
 );
