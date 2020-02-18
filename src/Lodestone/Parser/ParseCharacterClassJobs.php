@@ -28,6 +28,9 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
             // class name
             $name = trim($li->find('.character__job__name')->text());
 
+            // remove this shit
+            $name = str_ireplace('(Limited Job)', null, $name);
+
             // get game data ids
             $gd = ClassJobs::findGameData($name);
 
