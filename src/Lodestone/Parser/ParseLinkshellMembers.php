@@ -19,9 +19,13 @@ class ParseLinkshellMembers extends ParseAbstract implements Parser
         // build list
         $this->setList();
 
+        $namedata = trim($this->dom->find('.heading__linkshell__name')->text());
+        $namedata = explode("\n", $namedata);
+
         // set linkshell name
         $this->list->Profile = (Object)[
-            'Name'   => $this->dom->find('.heading__linkshell__name')->text(),
+            'Name'   => trim($namedata[0]),
+            'Server' => trim($namedata[1])
         ];
 
         // parse list
