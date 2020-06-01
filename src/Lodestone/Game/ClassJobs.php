@@ -111,6 +111,18 @@ class ClassJobs
     }
     
     /**
+     * Provides the correct role ID for a given role name, this
+     * separates job/class.
+     */
+    public static function findRoleIdFromName($name)
+    {
+        $name = strtolower($name);
+        $array = array_flip(self::ROLES);
+        
+        return $array[$name] ?? null;
+    }
+    
+    /**
      * Find class/job in the json data
      *
      * @param $name

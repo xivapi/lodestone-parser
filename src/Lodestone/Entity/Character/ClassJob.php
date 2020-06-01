@@ -14,4 +14,5 @@ class ClassJob extends AbstractEntity
     public $ExpLevelTogo;
     public $ExpLevelMax;
     public $IsSpecialised;
+    Public $UnlockedState;
 }

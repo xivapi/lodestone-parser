@@ -17,13 +17,13 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
     public function handle(string $html)
     {
         // set dom
-        $this->setDom($html, true);
+        $this->setDom($html);
 
         $classjobs = [];
-
+        
         // loop through roles
         /** @var DomQuery $li */
-        foreach ($this->dom->find('.character__job li') as $li)
+        foreach ($this->dom->find('.character__content')->find('li') as $li)
         {
             // class name
             $name   = trim($li->find('.character__job__name')->text());
@@ -43,6 +43,14 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
             $role->Name    = $gd->Name;
             $role->ClassID = $gd->ClassID;
             $role->JobID   = $gd->JobID;
+            
+            // Handle the unlock state based on the tooltip name, the 1st "Name" will be Job or Class if no Job unlocked.
+            $unlockedState = trim(explode('/', $li->find('.character__job__name')->attr('data-tooltip'))[0]);
+            
+            $role->UnlockedState = [
+                'Name' => $unlockedState,
+                'ID' => ClassJobs::findRoleIdFromName($unlockedState)
+            ];
 
             // level
             $level = trim($li->find('.character__job__level')->text());
