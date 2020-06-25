@@ -242,7 +242,7 @@ class ParseCharacter extends ParseAbstract implements Parser
         // title
         if ($title = $this->dom->find('.frame__chara__title')) {
             $this->profile->Title = html_entity_decode(trim(strip_tags($title[0])), ENT_QUOTES, "UTF-8");
-            $this->profile->TitleTop = $this->dom->find('.frame__chara .frame__chara__box p')->hasClass('frame__chara__title');
+            $this->profile->TitleTop = $this->dom->find('.frame__chara .frame__chara__box p')->eq(0)->hasClass('frame__chara__title');
         }
     }
     
