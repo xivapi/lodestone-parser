@@ -3,6 +3,7 @@
 namespace Lodestone\Parser;
 
 use Lodestone\Entity\Character\ClassJob;
+use Lodestone\Entity\Character\ClassJobElemental;
 use Lodestone\Exceptions\LodestonePrivateException;
 use Lodestone\Game\ClassJobs;
 use Rct567\DomQuery\DomQuery;
@@ -71,11 +72,27 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
 
             $classjobs[] = $role;
         }
-
+        
+        
+        $elemental = new ClassJobElemental();
+        
+        $node = $this->dom->find('.character__job__list');
+    
+        [$current, $max] = explode('/', $node->find('.character__job__exp')->text());
+        $current = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
+        $max     = filter_var(trim(str_ireplace('-', null, $max)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
+        
+        $elemental->Level        = (int)$node->find('.character__job__level')->text();
+        $elemental->ExpLevel     = $current;
+        $elemental->ExpLevelMax  = $max;
+        $elemental->ExpLevelTogo = $max - $current;
+        
         unset($box);
         unset($node);
 
-        return $classjobs;
+        return [
+            'classjobs' => $classjobs,
+            'elemental' => $elemental,
+        ];
     }
-
 }
