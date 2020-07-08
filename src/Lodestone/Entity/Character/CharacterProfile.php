@@ -27,8 +27,6 @@ class CharacterProfile extends AbstractEntity
     public $Gear = [];
     public $Attributes = [];
     public $ActiveClassJob;
-    public $Minions = [];
-    public $Mounts = [];
     public $ParseDate;
 
     public function __construct()
