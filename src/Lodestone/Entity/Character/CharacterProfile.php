@@ -27,8 +27,6 @@ class CharacterProfile extends AbstractEntity
     public $ClassJobs = [];
     public $GearSet = []; // gear + attributes
     public $ActiveClassJob;
-    public $Minions = [];
-    public $Mounts = [];
     public $ParseDate;
     public $Lang;
 
