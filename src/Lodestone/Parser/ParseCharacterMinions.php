@@ -23,7 +23,7 @@ class ParseCharacterMinions extends ParseAbstract implements Parser
         foreach ($this->dom->find('.minion__list__item') as $li) {
             $minion       = new Minion();
             $minion->Name = $li->find('.minion__list__text')->text();
-            $minion->Icon = $li->find('.minion__list__icon__image')->attr('src');
+            $minion->Icon = $li->find('.minion__list__icon__image')->attr('data-original');
             $minions[]    = $minion;
         }
         return $minions;

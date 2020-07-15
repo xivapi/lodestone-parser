@@ -12,5 +12,5 @@ require __DIR__ . '/vendor/autoload.php';
 $api = new \Lodestone\Api();
 
 print_r([
-    'results' => $api->character()->classjobs('26707100')
+    'results' => $api->character()->mounts('26707100')
 ]);

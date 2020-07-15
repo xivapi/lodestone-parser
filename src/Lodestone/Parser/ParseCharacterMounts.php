@@ -23,7 +23,7 @@ class ParseCharacterMounts extends ParseAbstract implements Parser
         foreach ($this->dom->find('.mount__list__item') as $li) {
             $mount       = new Minion();
             $mount->Name = $li->find('.mount__list__text')->text();
-            $mount->Icon = $li->find('.mount__list__icon__image')->attr('src');
+            $mount->Icon = $li->find('.mount__list__icon__image')->attr('data-original');
             $mounts[]    = $mount;
         }
         return $mounts;
