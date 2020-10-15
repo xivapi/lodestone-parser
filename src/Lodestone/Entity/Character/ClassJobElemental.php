@@ -4,15 +4,11 @@ namespace Lodestone\Entity\Character;
 
 use Lodestone\Entity\AbstractEntity;
 
-class ClassJob extends AbstractEntity
+class ClassJobElemental extends AbstractEntity
 {
-    public $Name;
-    public $ClassID;
-    public $JobID;
+    public $Name = 'Elemental Level';
     public $Level;
     public $ExpLevel;
     public $ExpLevelTogo;
     public $ExpLevelMax;
-    public $IsSpecialised;
-    Public $UnlockedState;
 }

@@ -9,8 +9,9 @@ class CharacterProfile extends AbstractEntity
     public $ID;
     public $Name;
     public $Server;
-    public $Lang;
+    public $DC;
     public $Title;
+    public $TitleTop;
     public $Avatar;
     public $Portrait;
     public $Bio = '';
@@ -24,10 +25,10 @@ class CharacterProfile extends AbstractEntity
     public $FreeCompanyId;
     public $PvPTeamId;
     public $ClassJobs = [];
-    public $Gear = [];
-    public $Attributes = [];
+    public $GearSet = []; // gear + attributes
     public $ActiveClassJob;
     public $ParseDate;
+    public $Lang;
 
     public function __construct()
     {
