@@ -21,7 +21,7 @@ $api->config()->useAsync();
 $api->requestId('profile')->character()->get(730968);
 $api->requestId('classjobs')->character()->classjobs(730968);
 $api->requestId('minions')->character()->minions(730968);
-$api->requestId('minions')->character()->mounts(730968);
+$api->requestId('mounts')->character()->mounts(730968);
 
 $responses = $api->http()->settle();
 
