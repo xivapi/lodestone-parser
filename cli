@@ -11,6 +11,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
 
+$start = microtime(true);
 print_r([
-    'results' => $api->character()->classjobs('7322082')
+    'results' => $api->character()->get('7322082')
 ]);
+$finish = microtime(true);
+
+echo "duration = ". ($finish - $start) ."ms";

@@ -2,6 +2,7 @@
 
 namespace Lodestone;
 
+use Lodestone\Http\AsyncHandler;
 use Lodestone\Http\Http;
 use Lodestone\Http\RequestConfig;
 use Lodestone\Api\{
@@ -30,6 +31,12 @@ class Api
         }
 
         return $class;
+    }
+    
+    public function requestId(string $name)
+    {
+        AsyncHandler::setRequestId($name);
+        return $this;
     }
 
     /**

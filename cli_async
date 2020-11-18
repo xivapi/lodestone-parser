@@ -7,6 +7,8 @@
  */
 
 // composer auto loader
+use Lodestone\Http\AsyncHandler;
+
 require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
@@ -16,30 +18,14 @@ $start = microtime(true);
 // use async mode
 $api->config()->useAsync();
 
-$responses = [];
-foreach(range(0,5) as $i) {
-    echo "Loop: {$i} \n";
-    // perform multiple requests
-    $api->character()->get(730968);
-    $api->character()->get(15609878);
-    $api->character()->get(2269193);
-    $api->character()->get(720399);
-    $api->character()->get(14673089);
-    $api->character()->get(24328626);
-    $api->character()->get(24778921);
-    $api->character()->get(6649088);
-    $api->character()->get(1567731);
-    $api->character()->get(11887821);
+$api->requestId('profile')->character()->get(730968);
+$api->requestId('classjobs')->character()->classjobs(730968);
+$api->requestId('minions')->character()->minions(730968);
+$api->requestId('minions')->character()->mounts(730968);
 
-    // settle responses (they will trigger in the order you added them)
-    $responses = array_merge($responses, $api->http()->settle());
-    sleep(1);
-}
+$responses = $api->http()->settle();
 
-$duration = microtime(true) - $start;
 
-print_r([
-    count($responses),
-    "Duration = {$duration}"
-]);
+
+print_r($responses);
 

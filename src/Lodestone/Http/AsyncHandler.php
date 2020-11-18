@@ -39,4 +39,9 @@ class AsyncHandler
         self::$responses = [];
         self::$requestId = null;
     }
+    
+    public static function setRequestId(string $name)
+    {
+        self::$requestId = $name;
+    }
 }
