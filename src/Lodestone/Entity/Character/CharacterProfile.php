@@ -23,6 +23,7 @@ class CharacterProfile extends AbstractEntity
     public $Town;
     public $GrandCompany;
     public $FreeCompanyId;
+    public $FreeCompanyName;
     public $PvPTeamId;
     public $ClassJobs = [];
     public $GearSet = []; // gear + attributes

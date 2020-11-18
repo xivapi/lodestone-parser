@@ -13,7 +13,7 @@ $api = new \Lodestone\Api();
 
 $start = microtime(true);
 print_r([
-    'results' => $api->character()->get('7322082')
+    'results' => $api->character()->get('24085627')
 ]);
 $finish = microtime(true);
 
