@@ -89,11 +89,15 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
         if ($fieldname == 'Elemental Level') {
             $elementalIndex = 0;
         } else {
-            [$current, $max] = explode('/', $node->find('.character__job__exp')->text());
-            $current         = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
+            $bozjanString    = trim($node->find('.character__job__exp')->text());
+            
+            if ($bozjanString) {
+                [$current, $max] = explode('/', $bozjanString);
+                $current         = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
     
-            $bozjan->Level        = (int)$node->find('.character__job__level')->text();
-            $bozjan->Mettle       = $current;
+                $bozjan->Level        = (int)$node->find('.character__job__level')->text();
+                $bozjan->Mettle       = $current;
+            }
         }
 
         //
@@ -102,9 +106,9 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
         $elemental       = new ClassJobEureka('Elemental Level');
         $node            = $this->dom->find('.character__job__list')[$elementalIndex];
         
-        $currentmax      = explode('/', $node->find('.character__job__exp')->text());
-        $current         = $currentmax[0] ?? null;
-        $max             = $currentmax[1] ?? null;
+        $eurekaString    = explode('/', $node->find('.character__job__exp')->text());
+        $current         = $eurekaString[0] ?? null;
+        $max             = $eurekaString[1] ?? null;
         
         $current         = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
         $max             = filter_var(trim(str_ireplace('-', null, $max)) ?: 0, FILTER_SANITIZE_NUMBER_INT);

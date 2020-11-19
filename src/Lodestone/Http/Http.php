@@ -9,7 +9,6 @@ use Lodestone\Exceptions\LodestonePrivateException;
 use Lodestone\Parser\Parser;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\HttpClient\Exception\ClientException;
 
 class Http
 {
@@ -106,28 +105,30 @@ class Http
         $responses = AsyncHandler::get();
 
         foreach ($client->stream($responses) as $response => $chunk) {
+            // grab the user data
+            $userdata = $response->getInfo('user_data');
+    
+            // grab request id
+            $requestId = $userdata['request_id'];
+    
+            // if it wasn't a 200, return error
+            if ($response->getStatusCode() != 200) {
+                $content[$requestId] = (Object)[
+                    'Error' => true,
+                    'StatusCode' => $response->getStatusCode()
+                ];
+                continue;
+            }
+            
             if ($chunk->isLast()) {
-                // grab the user data
-                $userdata = $response->getInfo('user_data');
-
-                // grab request id
-                $requestId = $userdata['request_id'];
-           
                 // grab the parser class name
                 /** @var Parser $parser */
                 $parser = new $userdata['parser']($userdata);
 
-                try {
-                    // handle response
-                    $content[$requestId] = $parser->handle(
-                        $response->getContent()
-                    );
-                } catch (ClientException $ex) {
-                    $content[$requestId] = (Object)[
-                        'Error'      => true,
-                        'StatusCode' => $ex->getCode()
-                    ];
-                }
+                // handle response
+                $content[$requestId] = $parser->handle(
+                    $response->getContent()
+                );
             }
         }
 
