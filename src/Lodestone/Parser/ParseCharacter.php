@@ -330,7 +330,7 @@ class ParseCharacter extends ParseAbstract implements Parser
     private function parseProfileFreeCompany($node)
     {
         $this->profile->FreeCompanyId = $this->getLodestoneId($node);
-        $this->profile->FreeCompanyName = trim($node->text());
+        $this->profile->FreeCompanyName = trim($node->find('a')->text());
     }
     
     /**
