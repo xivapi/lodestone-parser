@@ -30,7 +30,7 @@ class Http
      * Perform a request
      * @throws
      */
-    public function request(string $parser, Request $request)
+    public function request(string $parser, Request $request, int $tryIndex = 0)
     {
         // get client
         $client = $this->getClient($request->baseUri);
@@ -55,6 +55,11 @@ class Http
             return null;
         }
 
+        if ($response->getStatusCode() != 200 && $tryIndex < 3) {
+            sleep(2);
+            return $this->request($parser, $request, $tryIndex + 1);
+        }
+
         if ($response->getStatusCode() == 503) {
             throw new LodestoneMaintenanceException(
                 'Lodestone is currently down for maintenance.',
@@ -64,21 +69,21 @@ class Http
 
         if ($response->getStatusCode() == 404) {
             throw new LodestoneNotFoundException(
-                'Could not find: '. $request->userData['request_url'],
+                'Could not find: ' . $request->userData['request_url'],
                 $response->getStatusCode()
             );
         }
 
         if ($response->getStatusCode() == 403) {
             throw new LodestonePrivateException(
-                'This page is private: '. $request->userData['request_url'],
+                'This page is private: ' . $request->userData['request_url'],
                 $response->getStatusCode()
             );
         }
 
         if ($response->getStatusCode() != 200) {
             throw new LodestoneException(
-                'Unknown exception status code ('. $response->getStatusCode() .') for: '. $request->userData['request_url'],
+                'Unknown exception status code (' . $response->getStatusCode() . ') for: ' . $request->userData['request_url'],
                 $response->getStatusCode()
             );
         }
@@ -107,19 +112,19 @@ class Http
         foreach ($client->stream($responses) as $response => $chunk) {
             // grab the user data
             $userdata = $response->getInfo('user_data');
-    
+
             // grab request id
             $requestId = $userdata['request_id'];
-    
+
             // if it wasn't a 200, return error
             if ($response->getStatusCode() != 200) {
-                $content[$requestId] = (Object)[
+                $content[$requestId] = (object)[
                     'Error' => true,
                     'StatusCode' => $response->getStatusCode()
                 ];
                 continue;
             }
-            
+
             if ($chunk->isLast()) {
                 // grab the parser class name
                 /** @var Parser $parser */
