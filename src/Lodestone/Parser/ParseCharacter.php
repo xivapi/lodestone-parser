@@ -131,7 +131,7 @@ class ParseCharacter extends ParseAbstract implements Parser
             // get lodestone id
             $lodestoneId = $node->find('.db-tooltip__bt_item_detail a')->attr('href');
             $explodedLodestoneId = explode('/', $lodestoneId);
-            $item->ID = trim($explodedLodestoneId[count($explodedLodestoneId) - 1]);
+            $item->ID = trim($explodedLodestoneId[count($explodedLodestoneId) - 2]);
     
             // get category
             // this is a bit buggy for crafters, eg: https://eu.finalfantasyxiv.com/lodestone/character/17650647
@@ -143,7 +143,7 @@ class ParseCharacter extends ParseAbstract implements Parser
             $catSecond  = $catData[1] ?? null;
             $catName    = trim(str_ireplace(['Two-handed', 'One-handed'], null, $catName));
             $catName    = ucwords(strtolower($catName));
-            $item->Category = $catName;
+            $item->Category = $catName;           
     
             // get slot from category
             $slot = ($i == 0) ? 'MainHand' : $catName;
