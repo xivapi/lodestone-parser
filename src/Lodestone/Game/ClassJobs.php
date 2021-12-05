@@ -45,7 +45,9 @@ class ClassJobs
         35 => 'red mage',
         36 => 'blue mage',
         37 => 'gunbreaker',
-        38 => 'dancer'
+        38 => 'dancer',
+        39 => 'reaper',
+        40 => 'sage'
     ];
 
     /**
@@ -94,6 +96,8 @@ class ClassJobs
         36 => [ 36, 36 ],
         37 => [ 37, 37, ],
         38 => [ 38, 38, ],
+        39 => [ 39, 39, ],
+        40 => [ 40, 40, ],
     ];
     
     public static function findGameData($name)

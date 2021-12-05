@@ -94,6 +94,11 @@ class ParseCharacterClassJobs extends ParseAbstract implements Parser
             if ($bozjanString) {
                 [$current, $max] = explode('/', $bozjanString);
                 $current         = filter_var(trim(str_ireplace('-', null, $current)) ?: 0, FILTER_SANITIZE_NUMBER_INT);
+                //If rank is max (25) then set current Mettle to null instead of an empty string ("")
+                if ($current == "") {
+                    $current = null;
+                }
+                
     
                 $bozjan->Level        = (int)$node->find('.character__job__level')->text();
                 $bozjan->Mettle       = $current;
