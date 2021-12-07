@@ -11,10 +11,4 @@ require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
 
-$start = microtime(true);
-print_r([
-    'results' => $api->character()->get('24085627')
-]);
-$finish = microtime(true);
-
-echo "duration = ". ($finish - $start) ."ms";
+print_r($api->character()->get('2747423')->Title);

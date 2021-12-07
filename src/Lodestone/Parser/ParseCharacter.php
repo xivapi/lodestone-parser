@@ -143,7 +143,7 @@ class ParseCharacter extends ParseAbstract implements Parser
             $catSecond  = $catData[1] ?? null;
             $catName    = trim(str_ireplace(['Two-handed', 'One-handed'], null, $catName));
             $catName    = ucwords(strtolower($catName));
-            $item->Category = $catName;           
+            $item->Category = $catName;
     
             // get slot from category
             $slot = ($i == 0) ? 'MainHand' : $catName;
