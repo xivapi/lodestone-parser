@@ -11,4 +11,4 @@ require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
 
-print_r($api->character()->get('2747423')->Title);
+print_r($api->character()->get('9575452')->Title);
