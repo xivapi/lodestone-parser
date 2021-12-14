@@ -32,32 +32,41 @@ $arg1   = isset($argv[2]) ? trim($argv[2]) : false;
 // create api instance
 $api = new \Lodestone\Api();
 
+// Easy adjusting of tests
+$user = '9575452';
+$expectedUserName = 'Arcane Disgea';
+$fc = '9232379236109629819';
+$expectedfc = 'Hell Hath No Fury';
+$ls = '18014398509568031';
+$pvp = '59665d98bf81ff58db63305b538cd69a6c64d578';
+
 echo "-- RUNNING TESTS --\n";
-Assert::assertSame($api->getCharacter('730968')->Name, 'Premium Virtue');
-Assert::assertNotEmpty($api->getCharacterFriends('730968'));
-Assert::assertNotEmpty($api->getCharacterFollowing('15609878'));
-Assert::assertTrue($api->getCharacterAchievements('730968')->PointsTotal > 0);
-Assert::assertNotEmpty($api->getCharacterAchievementsFull('730968')->Achievements);
-Assert::assertSame($api->getFreeCompany('9231253336202687179')->Name, 'Equilibrium');
-Assert::assertSame($api->getFreeCompanyFull('9233927348481473031')->Profile->ID, '9233927348481473031');
-Assert::assertNotEmpty($api->getFreeCompanyMembers('9231253336202687179')->Results);
-Assert::assertNotEmpty($api->getLinkshellMembers('19984723346535274')->Results);
-Assert::assertNotEmpty($api->getPvPTeamMembers('3ff84f9192055a769e7ac8668c107507c17325c3')->Results);
-Assert::assertNotEmpty($api->searchCharacter('Premium Virtue')->Results);
-Assert::assertNotEmpty($api->searchFreeCompany('a')->Results);
-Assert::assertNotEmpty($api->searchLinkshell('a')->Results);
-Assert::assertNotEmpty($api->searchPvPTeam('a')->Results);
-Assert::assertNotEmpty($api->getLodestoneBanners());
-Assert::assertNotEmpty($api->getLodestoneNews());
-Assert::assertNotEmpty($api->getLodestoneTopics());
-Assert::assertNotEmpty($api->getLodestoneNotices());
-Assert::assertNotEmpty($api->getLodestoneMaintenance());
-Assert::assertNotEmpty($api->getLodestoneUpdates());
-Assert::assertNotEmpty($api->getLodestoneStatus());
-Assert::assertNotEmpty($api->getWorldStatus());
-Assert::assertNotEmpty($api->getDevBlog());
+Assert::assertSame($api->character()->get($user)->Name, $expectedUserName);
+Assert::assertNotEmpty($api->character()->friends($user));
+Assert::assertNotEmpty($api->character()->following($user));
+// Assert::assertTrue($api->character()->achievements($user)->PointsTotal > 0); AHHHHHHHHHHHHHHHH
+// Assert::assertNotEmpty($api->getCharacterAchievementsFull($user)->Achievements); This may not be relevant anymore
+Assert::assertSame($api->FreeCompany()->get($fc)->Name, $expectedfc);
+// Assert::assertSame($api->getFreeCompanyFull('9233927348481473031')->Profile->ID, '9233927348481473031'); This may not be relevant anymore
+Assert::assertNotEmpty($api->FreeCompany()->members($fc)->Results);
+Assert::assertNotEmpty($api->Linkshell()->get($ls)->Results);
+Assert::assertNotEmpty($api->PvPTeam()->get($pvp)->Results);
+Assert::assertNotEmpty($api->Character()->search($expectedUserName)->Results);
+Assert::assertNotEmpty($api->FreeCompany()->search('a')->Results);
+Assert::assertNotEmpty($api->Linkshell()->search('a')->Results);
+Assert::assertNotEmpty($api->PvPTeam()->search('a')->Results);
+Assert::assertNotEmpty($api->lodestone()->banners());
+Assert::assertNotEmpty($api->lodestone()->News());
+Assert::assertNotEmpty($api->lodestone()->Topics());
+Assert::assertNotEmpty($api->lodestone()->Notices());
+Assert::assertNotEmpty($api->lodestone()->Maintenance());
+Assert::assertNotEmpty($api->lodestone()->Updates());
+Assert::assertNotEmpty($api->lodestone()->Status());
+Assert::assertNotEmpty($api->lodestone()->WorldStatus());
+Assert::assertNotEmpty($api->devposts()->blog());
 # Assert::assertNotEmpty($api->getDevPosts()); - this takes agessssss
-Assert::assertNotEmpty($api->getFeast());
-Assert::assertNotEmpty($api->getDeepDungeon());
+Assert::assertNotEmpty($api->leaderboards()->feast());
+Assert::assertNotEmpty($api->leaderboards()->ddPalaceOfTheDead());
+Assert::assertNotEmpty($api->leaderboards()->ddHeavenOnHigh());
 
 echo "-- TESTS COMPLETE --\n";
