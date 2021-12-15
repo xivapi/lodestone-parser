@@ -11,4 +11,143 @@ require __DIR__ . '/vendor/autoload.php';
 
 $api = new \Lodestone\Api();
 
-print_r($api->character()->get('9575452')->Title);
+print_r($argv);
+
+if ($argc < 2) {
+    print("No arguments provided.\n");
+    return;
+}
+
+// Remove the cli file from the arguments array
+array_shift($argv);
+$cliCommandType = $argv[0];
+
+switch($cliCommandType) {
+    case "character":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected Character ID\n");
+            break;
+        }
+        print_r("Parsing character of {$argv[1]}...\n");
+        $results = $api->character()->get($argv[1]);
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
+    case "freecompany":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected FreeCompany ID\n");
+            break;
+        }
+        print_r("Parsing freecompany of {$argv[1]}...\n");
+        $results = $api->freecompany()->get($argv[1]);
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
+    case "pvpteam":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected PVP Team ID\n");
+            break;
+        }
+        print_r("Parsing pvp team of {$argv[1]}...\n");
+        $results = $api->pvpteam()->get($argv[1]);
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
+    case "linkshell":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected Linkshell ID\n");
+            break;
+        }
+        print_r("Parsing linkshell of {$argv[1]}...\n");
+        $results = $api->linkshell()->get($argv[1])->Results;
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
+    case "achievements":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected Linkshell ID\n");
+            break;
+        }
+        print_r("Parsing achievements of {$argv[1]}...\n");
+        $results = $api->character()->achievements($argv[1]);
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
+    case "banners":
+        $results = $api->lodestone()->banners();
+        if (isset($argv[1]) == "-file") {
+            $file = fopen("{$argv[2]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+        
+    case "leaderboards":
+        // Don't @me I know this is scuff.
+        switch ($argv[1]) {
+            case "feast":
+                $results = $api->leaderboards()->feast();
+                if (isset($argv[2]) == "-file") {
+                    $file = fopen("{$argv[3]}.json", 'w');
+                    fwrite($file, json_encode($results));
+                    fclose($file);
+                    break;
+                }
+                print_r($results);
+                break;
+
+            case "potd":
+                $results = $api->leaderboards()->ddPalaceOfTheDead();
+                if (isset($argv[2]) == "-file") {
+                    $file = fopen("{$argv[3]}.json", 'w');
+                    fwrite($file, json_encode($results));
+                    fclose($file);
+                    break;
+                }
+                print_r($results);
+                break;
+
+            case "hoh":
+                $results = $api->leaderboards()->ddHeavenOnHigh();
+                if (isset($argv[2]) == "-file") {
+                    $file = fopen("{$argv[3]}.json", 'w');
+                    fwrite($file, json_encode($results));
+                    fclose($file);
+                    break;
+                }
+                print_r($results);
+                break;
+        }
+}
