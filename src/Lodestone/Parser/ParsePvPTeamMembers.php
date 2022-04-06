@@ -32,7 +32,7 @@ class ParsePvPTeamMembers extends ParseAbstract implements Parser
 
         // parse list
         /** @var DomQuery $node */
-        foreach ($this->dom->find('.ldst__window .entry') as $node) {
+        foreach ($this->dom->find('.ldst__window > .pvpteam__member > .entry') as $node) {
             $obj           = new CharacterSimple();
             $obj->ID       = $this->getLodestoneId($node);
             $obj->Name     = $node->find('.entry__name')->text();
@@ -46,8 +46,8 @@ class ParsePvPTeamMembers extends ParseAbstract implements Parser
                 }
             }
 
-            $temp = $node->find('.entry__freecompany__info li');
-            $obj->FeastMatches = end($temp)->find('span')->text();
+            $temp = $node->find('.entry__freecompany__info > li > span');
+            $obj->FeastMatches = $temp->last()->text();
 
             $this->list->Results[] = $obj;
         }
