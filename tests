@@ -39,9 +39,13 @@ $fc = '9232379236109629819';
 $expectedfc = 'Hell Hath No Fury';
 $ls = '18014398509568031';
 $pvp = '59665d98bf81ff58db63305b538cd69a6c64d578';
+$bio = "This is a test of the emergency alert system.\nAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
 
 echo "-- RUNNING TESTS --\n";
-Assert::assertSame($api->character()->get($user)->Name, $expectedUserName);
+$character = $api->character()->get($user);
+Assert::assertSame($expectedUserName, $character->Name);
+Assert::assertSame($bio, $character->Bio);
+
 Assert::assertNotEmpty($api->character()->friends($user));
 Assert::assertNotEmpty($api->character()->following($user));
 // Assert::assertTrue($api->character()->achievements($user)->PointsTotal > 0); AHHHHHHHHHHHHHHHH
