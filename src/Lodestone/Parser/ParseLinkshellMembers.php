@@ -25,7 +25,7 @@ class ParseLinkshellMembers extends ParseAbstract implements Parser
         // set linkshell name
         $this->list->Profile = (Object)[
             'Name'   => trim($namedata[0]),
-            'Server' => trim($namedata[1])
+            'Server' => trim($namedata[1] ?? '')
         ];
 
         // parse list

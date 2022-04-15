@@ -36,17 +36,21 @@ $api = new \Lodestone\Api();
 $user = '9575452';
 $expectedUserName = 'Arcane Disgea';
 $fc = '9232379236109629819';
-$expectedfc = 'Hell Hath No Fury';
+$expectedfc = 'Hell On Aura';
 $ls = '18014398509568031';
 $pvp = '59665d98bf81ff58db63305b538cd69a6c64d578';
+$bio = "This is a test of the emergency alert system.\nAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
 
 echo "-- RUNNING TESTS --\n";
-Assert::assertSame($api->character()->get($user)->Name, $expectedUserName);
+$character = $api->character()->get($user);
+Assert::assertSame($expectedUserName, $character->Name);
+Assert::assertSame($bio, $character->Bio);
+
 Assert::assertNotEmpty($api->character()->friends($user));
 Assert::assertNotEmpty($api->character()->following($user));
 // Assert::assertTrue($api->character()->achievements($user)->PointsTotal > 0); AHHHHHHHHHHHHHHHH
 // Assert::assertNotEmpty($api->getCharacterAchievementsFull($user)->Achievements); This may not be relevant anymore
-Assert::assertSame($api->FreeCompany()->get($fc)->Name, $expectedfc);
+Assert::assertSame($expectedfc, $api->FreeCompany()->get($fc)->Name);
 // Assert::assertSame($api->getFreeCompanyFull('9233927348481473031')->Profile->ID, '9233927348481473031'); This may not be relevant anymore
 Assert::assertNotEmpty($api->FreeCompany()->members($fc)->Results);
 Assert::assertNotEmpty($api->Linkshell()->get($ls)->Results);
@@ -56,12 +60,12 @@ Assert::assertNotEmpty($api->FreeCompany()->search('a')->Results);
 Assert::assertNotEmpty($api->Linkshell()->search('a')->Results);
 Assert::assertNotEmpty($api->PvPTeam()->search('a')->Results);
 Assert::assertNotEmpty($api->lodestone()->banners());
-Assert::assertNotEmpty($api->lodestone()->News());
-Assert::assertNotEmpty($api->lodestone()->Topics());
-Assert::assertNotEmpty($api->lodestone()->Notices());
-Assert::assertNotEmpty($api->lodestone()->Maintenance());
-Assert::assertNotEmpty($api->lodestone()->Updates());
-Assert::assertNotEmpty($api->lodestone()->Status());
+//Assert::assertNotEmpty($api->lodestone()->News());
+//Assert::assertNotEmpty($api->lodestone()->Topics());
+//Assert::assertNotEmpty($api->lodestone()->Notices());
+//Assert::assertNotEmpty($api->lodestone()->Maintenance());
+//Assert::assertNotEmpty($api->lodestone()->Updates());
+//Assert::assertNotEmpty($api->lodestone()->Status());
 Assert::assertNotEmpty($api->lodestone()->WorldStatus());
 Assert::assertNotEmpty($api->devposts()->blog());
 # Assert::assertNotEmpty($api->getDevPosts()); - this takes agessssss
