@@ -50,7 +50,7 @@ Assert::assertNotEmpty($api->character()->friends($user));
 Assert::assertNotEmpty($api->character()->following($user));
 // Assert::assertTrue($api->character()->achievements($user)->PointsTotal > 0); AHHHHHHHHHHHHHHHH
 // Assert::assertNotEmpty($api->getCharacterAchievementsFull($user)->Achievements); This may not be relevant anymore
-Assert::assertSame($api->FreeCompany()->get($fc)->Name, $expectedfc);
+Assert::assertSame($expectedfc, $api->FreeCompany()->get($fc)->Name);
 // Assert::assertSame($api->getFreeCompanyFull('9233927348481473031')->Profile->ID, '9233927348481473031'); This may not be relevant anymore
 Assert::assertNotEmpty($api->FreeCompany()->members($fc)->Results);
 Assert::assertNotEmpty($api->Linkshell()->get($ls)->Results);
