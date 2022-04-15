@@ -56,12 +56,12 @@ Assert::assertNotEmpty($api->FreeCompany()->search('a')->Results);
 Assert::assertNotEmpty($api->Linkshell()->search('a')->Results);
 Assert::assertNotEmpty($api->PvPTeam()->search('a')->Results);
 Assert::assertNotEmpty($api->lodestone()->banners());
-Assert::assertNotEmpty($api->lodestone()->News());
-Assert::assertNotEmpty($api->lodestone()->Topics());
-Assert::assertNotEmpty($api->lodestone()->Notices());
-Assert::assertNotEmpty($api->lodestone()->Maintenance());
-Assert::assertNotEmpty($api->lodestone()->Updates());
-Assert::assertNotEmpty($api->lodestone()->Status());
+//Assert::assertNotEmpty($api->lodestone()->News());
+//Assert::assertNotEmpty($api->lodestone()->Topics());
+//Assert::assertNotEmpty($api->lodestone()->Notices());
+//Assert::assertNotEmpty($api->lodestone()->Maintenance());
+//Assert::assertNotEmpty($api->lodestone()->Updates());
+//Assert::assertNotEmpty($api->lodestone()->Status());
 Assert::assertNotEmpty($api->lodestone()->WorldStatus());
 Assert::assertNotEmpty($api->devposts()->blog());
 # Assert::assertNotEmpty($api->getDevPosts()); - this takes agessssss
