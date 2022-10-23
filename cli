@@ -22,7 +22,7 @@ if ($argc < 2) {
 array_shift($argv);
 $cliCommandType = $argv[0];
 
-switch($cliCommandType) {
+switch ($cliCommandType) {
     case "character":
         if (!isset($argv[1])) {
             print_r("INVALID ARGUMENT: Expected Character ID\n");
@@ -87,6 +87,22 @@ switch($cliCommandType) {
         print_r($results);
         break;
 
+    case "cwlinkshell":
+        if (!isset($argv[1])) {
+            print_r("INVALID ARGUMENT: Expected Linkshell ID\n");
+            break;
+        }
+        print_r("Parsing linkshell of {$argv[1]}...\n");
+        $results = $api->linkshell()->getCrossWorld($argv[1])->Results;
+        if (isset($argv[2]) == "-file") {
+            $file = fopen("{$argv[3]}.json", 'w');
+            fwrite($file, json_encode($results));
+            fclose($file);
+            break;
+        }
+        print_r($results);
+        break;
+
     case "achievements":
         if (!isset($argv[1])) {
             print_r("INVALID ARGUMENT: Expected Linkshell ID\n");
@@ -113,7 +129,7 @@ switch($cliCommandType) {
         }
         print_r($results);
         break;
-        
+
     case "leaderboards":
         // Don't @me I know this is scuff.
         switch ($argv[1]) {
