@@ -23,9 +23,9 @@ class ParseLinkshellMembers extends ParseAbstract implements Parser
         $namedata = explode("\n", $namedata);
 
         // set linkshell name
-        $this->list->Profile = (Object)[
+        $this->list->Profile = (object)[
             'Name'   => trim($namedata[0]),
-            'Server' => trim($namedata[1] ?? '')
+            'Server' => trim($this->dom->find('.entry__world')->text() ?? '')
         ];
 
         // parse list
@@ -44,7 +44,7 @@ class ParseLinkshellMembers extends ParseAbstract implements Parser
 
             $this->list->Results[] = $obj;
         }
-
+        print_r($this->list);
         return $this->list;
     }
 }

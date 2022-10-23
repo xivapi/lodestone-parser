@@ -3,6 +3,7 @@
 namespace Lodestone\Api;
 
 use Lodestone\Parser\ParseLinkshellMembers;
+use Lodestone\Parser\ParseLinkshellCWMembers;
 use Lodestone\Parser\ParseLinkshellSearch;
 
 class Linkshell extends ApiAbstract
@@ -14,7 +15,7 @@ class Linkshell extends ApiAbstract
         return $this->handle(ParseLinkshellSearch::class, [
             'endpoint' => "/lodestone/linkshell",
             'query'    => [
-                'q'         => '"'. $name .'"',
+                'q'         => '"' . $name . '"',
                 'worldname' => $server,
                 'page'      => $page
             ]
@@ -28,7 +29,7 @@ class Linkshell extends ApiAbstract
         return $this->handle(ParseLinkshellSearch::class, [
             'endpoint' => "/lodestone/crossworld_linkshell",
             'query'    => [
-                'q'         => '"'. $name .'"',
+                'q'         => '"' . $name . '"',
                 'worldname' => $server,
                 'page'      => $page
             ]
@@ -47,7 +48,7 @@ class Linkshell extends ApiAbstract
 
     public function getCrossWorld(string $id, int $page = 1)
     {
-        return $this->handle(ParseLinkshellMembers::class, [
+        return $this->handle(ParseLinkshellCWMembers::class, [
             'endpoint' => "/lodestone/crossworld_linkshell/{$id}",
             'query'    => [
                 'page' => $page
