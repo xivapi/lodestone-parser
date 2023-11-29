@@ -32,7 +32,7 @@ class Request
         $this->baseUri   = $options['base_uri'] ?? null;
         $this->query     = $options['query'] ?? [];
         $this->headers   = $options['headers'] ?? [];
-        $this->json      = $options['json'] ?? [];
+        $this->json      = $options['json'] ?? null;
         $this->userData  = $options['user_data'] ?? [];
 
         // hard-coded headers
