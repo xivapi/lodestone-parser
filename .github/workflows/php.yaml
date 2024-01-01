@@ -35,5 +35,8 @@ jobs:
               with:
                   dependency-versions: ${{ matrix.composer_preference }}
 
+            - name: Run PHPStan
+              run: composer run-script phpstan
+
             - name: Run test suite
               run: composer run-script test
