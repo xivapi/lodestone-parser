@@ -44,7 +44,7 @@ class ParseLinkshellMembers extends ParseAbstract implements Parser
 
             $this->list->Results[] = $obj;
         }
-        print_r($this->list);
+
         return $this->list;
     }
 }
