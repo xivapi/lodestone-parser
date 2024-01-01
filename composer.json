@@ -22,11 +22,19 @@
         "rct567/dom-query": "^0.8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.1"
+        "phpunit/phpunit": "^8|^9"
     },
     "autoload": {
-        "psr-0": {
-            "Lodestone\\": "src/"
+        "psr-4": {
+            "Lodestone\\": "src/Lodestone"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lodestone\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
