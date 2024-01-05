@@ -1,0 +1,131 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_ireplace expects array\\|string, null given\\.$#"
+			count: 1
+			path: src/Lodestone/Api/DevPosts.php
+
+		-
+			message: "#^Cannot use array destructuring on bool\\|object\\.$#"
+			count: 1
+			path: src/Lodestone/Game/ClassJobs.php
+
+		-
+			message: "#^Method Lodestone\\\\Game\\\\ClassJobs\\:\\:findClassJob\\(\\) never returns object so it can be removed from the return type\\.$#"
+			count: 1
+			path: src/Lodestone/Game/ClassJobs.php
+
+		-
+			message: "#^Method Lodestone\\\\Game\\\\ClassJobs\\:\\:findClassJob\\(\\) should return bool\\|object but returns array\\<int, int\\>\\.$#"
+			count: 1
+			path: src/Lodestone/Game/ClassJobs.php
+
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_ireplace expects array\\|string, null given\\.$#"
+			count: 1
+			path: src/Lodestone/Game/ClassJobs.php
+
+		-
+			message: "#^Static property Lodestone\\\\Http\\\\AsyncHandler\\:\\:\\$requestId \\(string\\) does not accept null\\.$#"
+			count: 1
+			path: src/Lodestone/Http/AsyncHandler.php
+
+		-
+			message: "#^PHPDoc tag @throws has invalid value \\(\\)\\: Unexpected token \"\\\\n     \", expected type at offset 43$#"
+			count: 1
+			path: src/Lodestone/Http/Http.php
+
+		-
+			message: "#^PHPDoc tag @throws has invalid value \\(\\)\\: Unexpected token \"\\\\n     \", expected type at offset 51$#"
+			count: 1
+			path: src/Lodestone/Http/Http.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 2
+			path: src/Lodestone/Parser/ParseCharacter.php
+
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_ireplace expects array\\|string, null given\\.$#"
+			count: 2
+			path: src/Lodestone/Parser/ParseCharacter.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseCharacterAchievements.php
+
+		-
+			message: "#^Call to function unset\\(\\) contains undefined variable \\$box\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseCharacterClassJobs.php
+
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_ireplace expects array\\|string, null given\\.$#"
+			count: 6
+			path: src/Lodestone/Parser/ParseCharacterClassJobs.php
+
+		-
+			message: "#^Variable \\$node in PHPDoc tag @var does not match assigned variable \\$bozjan\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseCharacterClassJobs.php
+
+		-
+			message: "#^Access to an undefined property Rct567\\\\DomQuery\\\\DomQuery\\:\\:\\$dom\\.$#"
+			count: 2
+			path: src/Lodestone/Parser/ParseFreeCompany.php
+
+		-
+			message: "#^Call to an undefined method Rct567\\\\DomQuery\\\\DomQuery\\:\\:getServerAndDc\\(\\)\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseFreeCompany.php
+
+		-
+			message: "#^Call to an undefined method Rct567\\\\DomQuery\\\\DomQuery\\:\\:getTimestamp\\(\\)\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseFreeCompany.php
+
+		-
+			message: "#^Parameter \\#2 \\$replace of function str_ireplace expects array\\|string, null given\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseFreeCompany.php
+
+		-
+			message: "#^Access to an undefined property Lodestone\\\\Entity\\\\ListView\\\\ListView\\:\\:\\$Profile\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseLinkshellCWMembers.php
+
+		-
+			message: "#^Access to an undefined property Lodestone\\\\Entity\\\\ListView\\\\ListView\\:\\:\\$Profile\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseLinkshellMembers.php
+
+		-
+			message: "#^Variable \\$node in PHPDoc tag @var does not match assigned variable \\$arr\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseLodestoneBanners.php
+
+		-
+			message: "#^Variable \\$node in PHPDoc tag @var does not match assigned variable \\$arr\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParseLodestoneWorldStatus.php
+
+		-
+			message: "#^Access to an undefined property Lodestone\\\\Entity\\\\ListView\\\\ListView\\:\\:\\$Profile\\.$#"
+			count: 1
+			path: src/Lodestone/Parser/ParsePvPTeamMembers.php
+
+		-
+			message: "#^Parameter \\#1 \\$id of method Lodestone\\\\Api\\\\Character\\:\\:following\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: tests
+
+		-
+			message: "#^Parameter \\#1 \\$id of method Lodestone\\\\Api\\\\Character\\:\\:friends\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: tests
+
+		-
+			message: "#^Parameter \\#1 \\$id of method Lodestone\\\\Api\\\\Character\\:\\:get\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: tests

@@ -20,6 +20,12 @@ class Api
     private $namespaces = [];
 
     /**
+     * @template T
+     *
+     * @param class-string<T> $namespace
+     *
+     * @return T
+     *
      * will return an existing set namespace or a new one.
      */
     private function getApiNamespace($namespace)
