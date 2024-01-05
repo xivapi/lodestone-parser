@@ -1,0 +1,39 @@
+name: PHP
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+permissions:
+    contents: read
+
+jobs:
+    tests:
+
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php:
+                    - '7.2'
+                    - '7.4'
+                composer_preference:
+                    - 'lowest'
+                    - 'highest'
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: none
+
+            - uses: ramsey/composer-install@v2
+              with:
+                  dependency-versions: ${{ matrix.composer_preference }}
+
+            - name: Run test suite
+              run: composer run-script test
