@@ -18,6 +18,10 @@ jobs:
                 php:
                     - '7.2'
                     - '7.4'
+                    - '8.0'
+                    - '8.1'
+                    - '8.2'
+                    - '8.3'
                 composer_preference:
                     - 'lowest'
                     - 'highest'
@@ -32,6 +36,13 @@ jobs:
                   coverage: none
 
             - uses: ramsey/composer-install@v2
+              if: ${{ fromJSON(matrix.php) >= 8 }}
+              with:
+                  dependency-versions: ${{ matrix.composer_preference }}
+                  composer-options: '--with phpunit/phpunit:^9 --with symfony/http-client:^5.2'
+
+            - uses: ramsey/composer-install@v2
+              if: ${{ fromJSON(matrix.php) < 8 }}
               with:
                   dependency-versions: ${{ matrix.composer_preference }}
 
