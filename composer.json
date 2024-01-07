@@ -15,9 +15,9 @@
     ],
     "require": {
         "php": "^7.2",
-        "symfony/css-selector": ">=3.2",
+        "symfony/css-selector": "^3.2|^4|^5|^6|^7",
         "nesbot/carbon": "^2.10",
-        "symfony/http-client": "^4.3|^5.0",
+        "symfony/http-client": "^4.3|^5.0|^6|^7",
         "ramsey/uuid": "^3.8|^4.0",
         "rct567/dom-query": "^0.8.0"
     },
